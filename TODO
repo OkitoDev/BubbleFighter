@@ -1,0 +1,6 @@
+Figure out events for changing global values (damage/bullet speed etc.)
+Updating weapon values after new upgrade have been added
+Work on cooldowns
+Tests for damage/bullet size/bullet speed/cooldown calculations
+Add new weapons
+Sort out storing global values
