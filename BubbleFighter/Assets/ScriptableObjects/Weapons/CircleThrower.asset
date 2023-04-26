@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a136502813e498a875c5d1b710cae95, type: 3}
   m_Name: CircleThrower
   m_EditorClassIdentifier: 
-  baseCooldown: 1
-  baseBulletSize: 0.5
-  baseBulletSpeed: 5
+  cooldown: 2
+  bulletSize: 1
+  bulletSpeed: 1
   baseDamage: 3
-  baseDamageMultiplier: 1
+  damageMultiplier: 1
   bulletColors:
   - {r: 0.8584906, g: 0.25511748, b: 0.25511748, a: 1}
   - {r: 0.39148307, g: 1, b: 0, a: 1}

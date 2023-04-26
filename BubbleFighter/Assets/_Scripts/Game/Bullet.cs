@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Game
@@ -10,10 +9,20 @@ namespace Game
     {
         private SpriteRenderer _spriteRenderer;
         private float _damage;
+        private Transform _playerTransform;
 
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _playerTransform = ObjectFinder.Player.transform;
+        }
+
+        private void Update()
+        {
+            if (Vector3.Distance(_playerTransform.position, transform.position) > 3f)
+            {
+                Destroy(gameObject);
+            }
         }
 
         public void ChangeColor(Color color)
@@ -34,7 +43,6 @@ namespace Game
         public void SetDamage(float damage)
         {
             _damage = damage;
-            Debug.Log(damage);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Game
         // (e.g. damage multiplier +100% buff would bring it from 1 => 2)
         public static float GlobalDamage = 1f;
         public static float GlobalDamageMultiplier = 1f;
-        public static float GlobalCooldown = 1f;
+        public static float GlobalCooldownReduction = 1f;
         public static float GlobalBulletSize = 1f;
         public static float GlobalBulletSpeed = 1f;
 
@@ -18,22 +18,22 @@ namespace Game
         
         public static void AddGlobalDamageMultiplier(float damageMultiplierToAdd)
         {
-            GlobalDamageMultiplier += damageMultiplierToAdd;
+            GlobalDamageMultiplier += damageMultiplierToAdd / 100f;
         }
         
         public static void AddGlobalCooldown(float cooldownToAdd)
         {
-            GlobalCooldown += cooldownToAdd;
+            GlobalCooldownReduction = ((100f - cooldownToAdd) / 100f) * GlobalCooldownReduction;
         }
         
         public static void AddGlobalBulletSize(float bulletSizeToAdd)
         {
-            GlobalBulletSize += bulletSizeToAdd;
+            GlobalBulletSize += bulletSizeToAdd / 100f;
         }
 
         public static void AddGlobalBulletSpeed(float bulletSpeedToAdd)
         {
-            GlobalBulletSpeed += bulletSpeedToAdd;
+            GlobalBulletSpeed += bulletSpeedToAdd / 100f;
         }
     }
 }

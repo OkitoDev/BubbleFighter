@@ -79,7 +79,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9010732737571292520}
         m_TargetAssemblyTypeName: Game.Weapons.Guns.BaseGunWeapon, Assembly-CSharp
-        m_MethodName: RecalculateDamage
+        m_MethodName: RecalculateAllStats
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de6dca47a11341899b2f6190157b7c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunWeapon: {fileID: 11400000, guid: d3d8aa7a988a503478a7ae7e7516fd37, type: 2}
+  gunData: {fileID: 11400000, guid: d3d8aa7a988a503478a7ae7e7516fd37, type: 2}

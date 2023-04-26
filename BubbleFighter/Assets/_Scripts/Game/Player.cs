@@ -1,5 +1,7 @@
 using Game.Events;
+using Game.Weapons.Guns;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game
 {
@@ -11,7 +13,7 @@ namespace Game
         [SerializeField] [Range(1,10)] private float moveSpeed;
         [SerializeField] private Transform firePoint;
         [SerializeField] private GameEvent fireEvent;
-        [SerializeField] private GameEvent damageChangeEvent;
+        [SerializeField] private GameEvent statsChangeEvent;
         public Transform FirePoint => firePoint;
 
 
@@ -42,7 +44,13 @@ namespace Game
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                damageChangeEvent.Raise();
+                GlobalValues.AddGlobalCooldown(99f);
+                GlobalValues.AddGlobalDamage(100f);
+                GlobalValues.AddGlobalDamageMultiplier(100f);
+                GlobalValues.AddGlobalBulletSize(10f);
+                GlobalValues.AddGlobalBulletSpeed(500f);
+                statsChangeEvent.Raise();
+                FindObjectOfType<CircleThrower>().EnableAutoFire();
             }
         }
 
