@@ -1,6 +1,6 @@
-namespace Game.Enemies
+namespace Interfaces
 {
-    public interface IEnemy
+    public interface IDamageable
     {
         public void TakeDamage(float damageAmount);
     }

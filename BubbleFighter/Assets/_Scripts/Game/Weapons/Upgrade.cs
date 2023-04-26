@@ -1,14 +1,7 @@
+using Enums;
+
 namespace Game.Weapons
 {
-    public enum UpgradeType
-    {
-        BaseDamage,
-        DamageMultiplier,
-        BulletSize,
-        BulletSpeed,
-        CooldownReduction
-    }
-    
     public class Upgrade
     {
         public UpgradeType Type;

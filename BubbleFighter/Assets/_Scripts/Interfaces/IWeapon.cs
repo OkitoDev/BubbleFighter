@@ -1,4 +1,4 @@
-namespace Game
+namespace Interfaces
 {
     public interface IWeapon
     {

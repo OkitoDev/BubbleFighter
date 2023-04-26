@@ -1,3 +1,4 @@
+using Game.Weapons;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -19,7 +20,7 @@ namespace Game
             }
         }
         
-        public GameObject prefabBasicBullet;
+        public Projectile prefabBubbleProjectile;
         public GameObject prefabBlueBackgroundMap;
         public GameObject prefabRedBackgroundMap;
     }

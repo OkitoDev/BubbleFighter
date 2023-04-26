@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Helpers;
 
-namespace Game.Extensions
+namespace Extensions
 {
-    public static class ListExtension
+    public static class ListExtensions
     {
         public static T GetRandomElement<T>(this List<T> list)
         {

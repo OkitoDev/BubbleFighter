@@ -8,10 +8,10 @@ namespace Game.Weapons.Guns
     public class GunData : ScriptableObject
     {
         public float cooldown; // In seconds
-        public float bulletSize;
-        public float bulletSpeed;
+        public float projectileSize;
+        public float projectileSpeed;
         public float baseDamage;
         public float damageMultiplier;
-        public List<Color> bulletColors;
+        public List<Color> projectileColors;
     }
 }

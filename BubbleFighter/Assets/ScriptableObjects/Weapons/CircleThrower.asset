@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: CircleThrower
   m_EditorClassIdentifier: 
   cooldown: 2
-  bulletSize: 1
-  bulletSpeed: 1
+  projectileSize: 1
+  projectileSpeed: 1
   baseDamage: 3
   damageMultiplier: 1
-  bulletColors:
-  - {r: 1, g: 0, b: 0.6946564, a: 1}
-  - {r: 0.39148307, g: 1, b: 0, a: 1}
+  projectileColors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0.12898159, b: 1, a: 1}

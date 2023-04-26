@@ -9,3 +9,9 @@ ________________________________________________________________________________
 - Added map background and implemented duplicating it + deleting non-visible map parts
 - Added new bullet sprite
 Next working on implementing enemies
+
+Second part:
+- Implemented base for enemies
+- Renaming and project structure
+- Some minor things
+Next working on project structure and changing guns so that it will be possible to assign a bullet (or multiple different bullets) to a gun

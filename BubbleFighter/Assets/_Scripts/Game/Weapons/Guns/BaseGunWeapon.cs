@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Extensions;
+using Enums;
+using Extensions;
 using UnityEngine;
 
 namespace Game.Weapons.Guns
@@ -8,20 +9,20 @@ namespace Game.Weapons.Guns
     public abstract class BaseGunWeapon : MonoBehaviour
     {
         [SerializeField] private GunData gunData;
-        private readonly BulletSpawner _bulletSpawner = new BulletSpawner();
+        private readonly ProjectileSpawner _projectileSpawner = new ProjectileSpawner();
         private Transform _baseFirePoint;
         private readonly List<Upgrade> _upgrades = new List<Upgrade>();
 
         private float TotalBaseDamageFromUpgrades => _upgrades.Where(upgrade => upgrade.Type == UpgradeType.BaseDamage).ToList().Sum(upgrade => upgrade.Value);
         private float TotalDamageMultiplierFromUpgrades => Mathf.Max(1f,_upgrades.Where(upgrade => upgrade.Type == UpgradeType.DamageMultiplier).ToList().Sum(upgrade => upgrade.Value));
-        private float TotalBulletSizeFromUpgrades => Mathf.Max(1f, _upgrades.Where(upgrade => upgrade.Type == UpgradeType.BulletSize).ToList().Sum(upgrade => upgrade.Value));
-        private float TotalBulletSpeedFromUpgrades => Mathf.Max(1f, _upgrades.Where(upgrade => upgrade.Type == UpgradeType.BulletSpeed).ToList().Sum(upgrade => upgrade.Value));
+        private float TotalProjectileSizeFromUpgrades => Mathf.Max(1f, _upgrades.Where(upgrade => upgrade.Type == UpgradeType.ProjectileSize).ToList().Sum(upgrade => upgrade.Value));
+        private float TotalProjectileSpeedFromUpgrades => Mathf.Max(1f, _upgrades.Where(upgrade => upgrade.Type == UpgradeType.ProjectileSpeed).ToList().Sum(upgrade => upgrade.Value));
         private float TotalCooldownReductionFromUpgrades => _upgrades.Where(upgrade => upgrade.Type == UpgradeType.CooldownReduction).Aggregate(1f, (current, upgrade) => current * ((100 - upgrade.Value) * 0.01f));
 
         // Stats
         private float _totalDamage;
-        private float _totalBulletSize;
-        private float _totalBulletSpeed;
+        private float _totalProjectileSize;
+        private float _totalProjectileSpeed;
         private float _totalCooldown;
         
         private float _lastFireTime = Mathf.NegativeInfinity;
@@ -44,41 +45,43 @@ namespace Game.Weapons.Guns
         {
             if (!IsWeaponOffCooldown || _isAutoFireEnabled) return;
             
-            FireBasicBullet(_baseFirePoint);
+            FireBubbleProjectile(_baseFirePoint);
             _lastFireTime = Time.time;
         }
 
-        private void FireBasicBullet(Transform firePoint) => _bulletSpawner.SpawnBasicBullet(firePoint, Mouse.GetMouseWorldPosition - ObjectFinder.Player.FirePoint.position, gunData.bulletColors.GetRandomElement(), _totalBulletSpeed,_totalBulletSize, _totalDamage);
+        private void FireBubbleProjectile(Transform firePoint) => _projectileSpawner.SpawnBubbleProjectile(firePoint, 
+            Mouse.GetMouseWorldPosition - ObjectFinder.Player.FirePoint.position, gunData.projectileColors.GetRandomElement(), 
+            _totalProjectileSpeed,_totalProjectileSize, _totalDamage, true);
         
         public void RecalculateDamage()
         {
-            float totalBaseDamage = gunData.baseDamage + TotalBaseDamageFromUpgrades + GlobalValues.GlobalDamage;
-            float totalDamageMultiplier = gunData.damageMultiplier * Mathf.Max(1f, TotalDamageMultiplierFromUpgrades) * GlobalValues.GlobalDamageMultiplier;
+            float totalBaseDamage = gunData.baseDamage + TotalBaseDamageFromUpgrades + GlobalValues.GlobalPlayerDamage;
+            float totalDamageMultiplier = gunData.damageMultiplier * Mathf.Max(1f, TotalDamageMultiplierFromUpgrades) * GlobalValues.GlobalPlayerDamageMultiplier;
             
             _totalDamage = totalBaseDamage * totalDamageMultiplier;
         }
 
-        public void RecalculateBulletSize()
+        public void RecalculateProjectileSize()
         {
-            _totalBulletSize = gunData.bulletSize * TotalBulletSizeFromUpgrades * GlobalValues.GlobalBulletSize;
+            _totalProjectileSize = gunData.projectileSize * TotalProjectileSizeFromUpgrades * GlobalValues.GlobalProjectileSize;
         }
 
-        public void RecalculateBulletSpeed()
+        public void RecalculateProjectileSpeed()
         {
-            _totalBulletSpeed = gunData.bulletSpeed * TotalBulletSpeedFromUpgrades * GlobalValues.GlobalBulletSpeed;
+            _totalProjectileSpeed = gunData.projectileSpeed * TotalProjectileSpeedFromUpgrades * GlobalValues.GlobalProjectileSpeed;
         }
 
         public void RecalculateCooldown()
         {
-            _totalCooldown = Mathf.Max(gunData.cooldown * GlobalValues.GlobalCooldownReduction * TotalCooldownReductionFromUpgrades,0.001f);
+            _totalCooldown = Mathf.Max(gunData.cooldown * GlobalValues.GlobalPlayerCooldownReduction * TotalCooldownReductionFromUpgrades,0.001f);
             StartAutoFire();
         }
 
         public void RecalculateAllStats()
         {
             RecalculateDamage();
-            RecalculateBulletSize();
-            RecalculateBulletSpeed();
+            RecalculateProjectileSize();
+            RecalculateProjectileSpeed();
             RecalculateCooldown();
         }
 
@@ -98,7 +101,7 @@ namespace Game.Weapons.Guns
 
         private void AutoFire()
         {
-            FireBasicBullet(_baseFirePoint);
+            FireBubbleProjectile(_baseFirePoint);
         }
     }
 }

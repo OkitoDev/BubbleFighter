@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Game
 {
     public static class GlobalValues
@@ -5,35 +7,101 @@ namespace Game
         // TODO that's only temporary
         // Damage works in percentages
         // (e.g. damage multiplier +100% buff would bring it from 1 => 2)
-        public static float GlobalDamage = 1f;
-        public static float GlobalDamageMultiplier = 1f;
-        public static float GlobalCooldownReduction = 1f;
-        public static float GlobalBulletSize = 1f;
-        public static float GlobalBulletSpeed = 1f;
+        public static float PlayerGold { get; private set; } = 1f;
+        public static float PlayerHealth{ get; private set; } = 100f;
+        public static float PlayerMaxHealth{ get; private set; } = 100f;
+        public static float GlobalEnemyHealthMultiplier { get; private set; } = 1f;
+        public static float GlobalEnemyHealth { get; private set; } = 0f;
+        public static float GlobalEnemyMovementSpeed { get; private set; } = 1f;
+        public static float GlobalEnemyDamage { get; private set; } = 0f;
+        public static float GlobalEnemyWorth { get; private set; } = 1f;
+        public static float GlobalEnemyDamageMultiplier { get; private set; } = 1f;
+        public static float GlobalEnemyCooldownReduction { get; private set; } = 1f;
+        
+        public static float GlobalPlayerDamage { get; private set; } =  0f;
+        public static float GlobalPlayerDamageMultiplier { get; private set; } = 1f;
+        public static float GlobalPlayerCooldownReduction { get; private set; } = 1f;
+        public static float GlobalProjectileSize { get; private set; } = 1f;
+        public static float GlobalProjectileSpeed { get; private set; } = 1f;
 
-        public static void AddGlobalDamage(float damageToAdd)
+        public static void AddDamage(float damageToAdd)
         {
-            GlobalDamage += damageToAdd;
+            GlobalPlayerDamage += damageToAdd;
         }
         
-        public static void AddGlobalDamageMultiplier(float damageMultiplierToAdd)
+        public static void AddDamageMultiplier(float damageMultiplierToAdd)
         {
-            GlobalDamageMultiplier += damageMultiplierToAdd / 100f;
+            GlobalPlayerDamageMultiplier += damageMultiplierToAdd / 100f;
         }
         
-        public static void AddGlobalCooldown(float cooldownToAdd)
+        public static void DecreaseCooldown(float cooldownDecrease)
         {
-            GlobalCooldownReduction = ((100f - cooldownToAdd) / 100f) * GlobalCooldownReduction;
+            GlobalPlayerCooldownReduction = ((100f - cooldownDecrease) / 100f) * GlobalPlayerCooldownReduction;
         }
         
-        public static void AddGlobalBulletSize(float bulletSizeToAdd)
+        public static void AddProjectileSize(float projectileSizeToAdd)
         {
-            GlobalBulletSize += bulletSizeToAdd / 100f;
+            GlobalProjectileSize += projectileSizeToAdd / 100f;
         }
 
-        public static void AddGlobalBulletSpeed(float bulletSpeedToAdd)
+        public static void AddProjectileSpeed(float projectileSpeedToAdd)
         {
-            GlobalBulletSpeed += bulletSpeedToAdd / 100f;
+            GlobalProjectileSpeed += projectileSpeedToAdd / 100f;
+        }
+
+        public static void AddPlayerGold(float goldToAdd)
+        {
+            PlayerGold += goldToAdd;
+        }
+
+        public static void AddEnemyHealthMultiplier(float enemyHealthMultiplierToAdd)
+        {
+            GlobalEnemyHealthMultiplier += enemyHealthMultiplierToAdd / 100f;
+        }
+        
+        public static void AddEnemyHealth(float enemyHealthToAdd)
+        {
+            GlobalEnemyHealth += enemyHealthToAdd;
+        }
+
+        public static void AddEnemyMovementSpeed(float movementSpeedToAdd)
+        {
+            GlobalEnemyMovementSpeed += movementSpeedToAdd / 100f;
+        }
+        
+        public static void AddEnemyDamage(float enemyDamageToAdd)
+        {
+            GlobalPlayerDamage += enemyDamageToAdd;
+        }
+        
+        public static void AddEnemyDamageMultiplier(float enemyDamageMultiplierToAdd)
+        {
+            GlobalEnemyDamageMultiplier += enemyDamageMultiplierToAdd / 100f;
+        }
+
+        public static void DecreaseEnemyAttackCooldown(float cooldownDecrease)
+        {
+            GlobalEnemyCooldownReduction = ((100f - cooldownDecrease) / 100f) * GlobalEnemyCooldownReduction;
+        }
+
+        public static void AddGlobalEnemyWorth(float enemyWorthToAdd)
+        {
+            GlobalEnemyWorth += enemyWorthToAdd / 100f;
+        }
+
+        public static void AddPlayerMaxHealth(float healthToAdd)
+        {
+            PlayerMaxHealth -= healthToAdd;
+        }
+
+        public static void HealPlayer(float healAmount)
+        {
+            PlayerHealth = Mathf.Min(PlayerHealth + healAmount,PlayerMaxHealth);
+        }
+
+        public static void DamagePlayer(float damageAmount)
+        {
+            PlayerHealth -= damageAmount;
         }
     }
 }

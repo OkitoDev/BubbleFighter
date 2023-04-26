@@ -44,11 +44,11 @@ namespace Game
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                GlobalValues.AddGlobalCooldown(99f);
-                GlobalValues.AddGlobalDamage(100f);
-                GlobalValues.AddGlobalDamageMultiplier(100f);
-                GlobalValues.AddGlobalBulletSize(10f);
-                GlobalValues.AddGlobalBulletSpeed(500f);
+                GlobalValues.DecreaseCooldown(99f);
+                GlobalValues.AddDamage(100f);
+                GlobalValues.AddDamageMultiplier(100f);
+                GlobalValues.AddProjectileSize(10f);
+                GlobalValues.AddProjectileSpeed(500f);
                 statsChangeEvent.Raise();
                 FindObjectOfType<BubbleGun>().EnableAutoFire();
             }
