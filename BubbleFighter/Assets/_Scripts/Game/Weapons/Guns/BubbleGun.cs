@@ -1,6 +1,6 @@
 namespace Game.Weapons.Guns
 {
-    public class CircleThrower : BaseGunWeapon
+    public class BubbleGun : BaseGunWeapon
     {
         
     }

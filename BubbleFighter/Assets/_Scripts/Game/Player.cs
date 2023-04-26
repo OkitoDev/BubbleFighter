@@ -50,7 +50,7 @@ namespace Game
                 GlobalValues.AddGlobalBulletSize(10f);
                 GlobalValues.AddGlobalBulletSpeed(500f);
                 statsChangeEvent.Raise();
-                FindObjectOfType<CircleThrower>().EnableAutoFire();
+                FindObjectOfType<BubbleGun>().EnableAutoFire();
             }
         }
 
@@ -60,7 +60,7 @@ namespace Game
             
             Vector2 aimDirection = _mousePosition - _rigidbody.position;
             float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
-            _rigidbody.rotation = aimAngle;
+            //_rigidbody.rotation = aimAngle;
         }
     }
 }

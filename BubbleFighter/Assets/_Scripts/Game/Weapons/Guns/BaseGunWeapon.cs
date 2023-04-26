@@ -42,13 +42,13 @@ namespace Game.Weapons.Guns
 
         public virtual void Fire()
         {
-            if (!IsWeaponOffCooldown) return;
+            if (!IsWeaponOffCooldown || _isAutoFireEnabled) return;
             
             FireBasicBullet(_baseFirePoint);
             _lastFireTime = Time.time;
         }
 
-        private void FireBasicBullet(Transform firePoint) => _bulletSpawner.SpawnBasicBullet(firePoint, gunData.bulletColors.GetRandomElement(), _totalBulletSpeed,_totalBulletSize, _totalDamage);
+        private void FireBasicBullet(Transform firePoint) => _bulletSpawner.SpawnBasicBullet(firePoint, Mouse.GetMouseWorldPosition - ObjectFinder.Player.FirePoint.position, gunData.bulletColors.GetRandomElement(), _totalBulletSpeed,_totalBulletSize, _totalDamage);
         
         public void RecalculateDamage()
         {
@@ -61,7 +61,6 @@ namespace Game.Weapons.Guns
         public void RecalculateBulletSize()
         {
             _totalBulletSize = gunData.bulletSize * TotalBulletSizeFromUpgrades * GlobalValues.GlobalBulletSize;
-            Debug.Log(_totalBulletSize);
         }
 
         public void RecalculateBulletSpeed()
@@ -71,7 +70,7 @@ namespace Game.Weapons.Guns
 
         public void RecalculateCooldown()
         {
-            _totalCooldown = gunData.cooldown * GlobalValues.GlobalCooldownReduction * TotalCooldownReductionFromUpgrades;
+            _totalCooldown = Mathf.Max(gunData.cooldown * GlobalValues.GlobalCooldownReduction * TotalCooldownReductionFromUpgrades,0.001f);
             StartAutoFire();
         }
 

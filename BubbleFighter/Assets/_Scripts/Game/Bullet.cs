@@ -9,17 +9,17 @@ namespace Game
     {
         private SpriteRenderer _spriteRenderer;
         private float _damage;
-        private Transform _playerTransform;
+        private Vector3 _initialPosition;
 
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _playerTransform = ObjectFinder.Player.transform;
+            _initialPosition = transform.position;
         }
 
         private void Update()
         {
-            if (Vector3.Distance(_playerTransform.position, transform.position) > 3f)
+            if (Vector3.Distance(_initialPosition, transform.position) > 8f)
             {
                 Destroy(gameObject);
             }
@@ -30,9 +30,9 @@ namespace Game
             _spriteRenderer.color = color;
         }
 
-        public void SetBulletSpeed(Vector3 direction, float bulletSpeed)
+        public void SetBulletSpeed(Vector2 direction, float bulletSpeed)
         {
-            GetComponent<Rigidbody2D>().AddForce(direction * bulletSpeed, ForceMode2D.Impulse);
+            GetComponent<Rigidbody2D>().AddForce(direction.normalized * bulletSpeed, ForceMode2D.Impulse);
         }
 
         public void SetSize(float size)

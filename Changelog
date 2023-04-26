@@ -1,3 +1,11 @@
 25.04
 
-Created base for the game with player movement, shooting bullets, weapon, base calculations for damage/bullet size etc.
+- Created base for the game with player movement, shooting bullets, weapon, base calculations for damage/bullet size etc.
+
+______________________________________________________________________________________________________________________________
+26.04
+
+- Added player sprite and animation
+- Added map background and implemented duplicating it + deleting non-visible map parts
+- Added new bullet sprite
+Next working on implementing enemies

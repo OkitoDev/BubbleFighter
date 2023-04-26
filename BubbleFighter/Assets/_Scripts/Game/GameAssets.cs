@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game
 {
@@ -19,5 +20,7 @@ namespace Game
         }
         
         public GameObject prefabBasicBullet;
+        public GameObject prefabBlueBackgroundMap;
+        public GameObject prefabRedBackgroundMap;
     }
 }
