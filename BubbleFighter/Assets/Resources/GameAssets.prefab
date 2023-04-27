@@ -43,6 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 958b7bee081b49bf80c19ef410877f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabBubbleProjectile: {fileID: 6869712560561268503, guid: e163d80ab8b466d4f96e08a6f6efbe27, type: 3}
-  prefabBlueBackgroundMap: {fileID: 3372673161296148226, guid: a7f3a91138410e54abe3b50b685aa82d, type: 3}
-  prefabRedBackgroundMap: {fileID: 1243856729563356263, guid: a7f16c850f93729429e3f8121b04d473, type: 3}
+  prefabDefaultProjectile: {fileID: 4460395654227718013, guid: e163d80ab8b466d4f96e08a6f6efbe27, type: 3}

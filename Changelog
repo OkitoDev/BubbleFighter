@@ -15,3 +15,9 @@ Second part:
 - Renaming and project structure
 - Some minor things
 Next working on project structure and changing guns so that it will be possible to assign a bullet (or multiple different bullets) to a gun
+
+______________________________________________________________________________________________________________________________
+27.04
+
+- Guns and projectile spawning rewritten, new weapons can be easily added and projectile patterns can be easily added and attached to weapons
+Might not seem like much but it's a huge progress since adding new weapons and new bullets alongside new bullet patterns is now trivial

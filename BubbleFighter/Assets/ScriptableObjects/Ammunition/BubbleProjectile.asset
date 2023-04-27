@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a136502813e498a875c5d1b710cae95, type: 3}
-  m_Name: CircleThrower
+  m_Script: {fileID: 11500000, guid: 73a30cec09ab4666bfa68ea8d7f9c853, type: 3}
+  m_Name: BubbleProjectile
   m_EditorClassIdentifier: 
-  cooldown: 2
-  projectileSize: 1
-  projectileSpeed: 1
-  baseDamage: 3
-  damageMultiplier: 1
-  projectileColors:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0.12898159, b: 1, a: 1}
+  size: 1
+  lifespan: 1
+  sprite: {fileID: 21300000, guid: 33bbc2d725bb058479f94fc13e9cb38f, type: 3}

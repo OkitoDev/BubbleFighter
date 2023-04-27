@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.Enemies
 {
     [System.Serializable]
-    public struct EnemyVariants
+    public struct EnemyVariant
     {
         public EnemyType enemyType;
         public Color color;

@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Enums;
 using Helpers;
@@ -10,6 +9,8 @@ namespace Game.Enemies
     [RequireComponent(typeof(SpriteRenderer))]
     public abstract class BaseEnemy : MonoBehaviour, IEnemy
     {
+        public Transform Transform => transform;
+
         private EnemyType _enemyType;
         private float _totalWorth;
         private float _totalHealthPoints;
@@ -19,7 +20,7 @@ namespace Game.Enemies
         private float _totalAttackCooldown;
         private SpriteRenderer _spriteRenderer;
         private EnemyData _enemyData;
-        private EnemyVariants _enemyVariant;
+        private EnemyVariant _enemyVariant;
         private float lastCollisionWithPlayer;
 
         private bool IsCollisionWithPlayerOffCooldown => Time.time - lastCollisionWithPlayer > _enemyData.collisionCooldown;
@@ -74,8 +75,7 @@ namespace Game.Enemies
             _totalAttackCooldown *= (100f - _enemyVariant.cooldownDecrease) / 100f;
             _totalAttackCooldown = Mathf.Max(_totalAttackCooldown,0.001f);
             _totalCollisionDamage = _enemyData.damage * _enemyData.collisionDamageMultiplier;
-            CancelInvoke(nameof(Attack));
-            InvokeRepeating(nameof(Attack),_totalAttackCooldown,_totalAttackCooldown);
+            RestartAttackPattern();
         }
 
         private void SetVisuals()
@@ -83,6 +83,12 @@ namespace Game.Enemies
             _spriteRenderer.sprite = _enemyData.sprite;
             _spriteRenderer.color = _enemyVariant.color;
             transform.localScale *= _enemyVariant.sizeMultiplier;
+        }
+
+        private void RestartAttackPattern()
+        {
+            CancelInvoke(nameof(Attack));
+            InvokeRepeating(nameof(Attack),_totalAttackCooldown,_totalAttackCooldown);
         }
 
         protected abstract void Pathing();

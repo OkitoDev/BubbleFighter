@@ -1,4 +1,5 @@
 using Game.Weapons;
+using Game.Weapons.Projectiles;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,8 +21,6 @@ namespace Game
             }
         }
         
-        public Projectile prefabBubbleProjectile;
-        public GameObject prefabBlueBackgroundMap;
-        public GameObject prefabRedBackgroundMap;
+        public Projectile prefabDefaultProjectile;
     }
 }

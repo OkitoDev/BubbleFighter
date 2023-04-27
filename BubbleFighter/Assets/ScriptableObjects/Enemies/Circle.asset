@@ -17,10 +17,35 @@ MonoBehaviour:
   movementSpeed: 0
   attackCooldown: 0
   collisionCooldown: 0
+  collisionDamageMultiplier: 0
   damage: 0
   sprite: {fileID: 0}
   variants:
   - enemyType: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
+    healthPointsMultiplier: 0
+    worthMultiplier: 0
+    movementSpeedMultiplier: 0
+    damageMultiplier: 0
+    sizeMultiplier: 0
+    cooldownDecrease: 0
+  - enemyType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+    healthPointsMultiplier: 0
+    worthMultiplier: 0
+    movementSpeedMultiplier: 0
+    damageMultiplier: 0
+    sizeMultiplier: 0
+    cooldownDecrease: 0
+  - enemyType: 1
+    color: {r: 0, g: 0, b: 0, a: 0}
+    healthPointsMultiplier: 0
+    worthMultiplier: 0
+    movementSpeedMultiplier: 0
+    damageMultiplier: 0
+    sizeMultiplier: 0
+    cooldownDecrease: 0
+  - enemyType: 3
     color: {r: 0, g: 0, b: 0, a: 0}
     healthPointsMultiplier: 0
     worthMultiplier: 0

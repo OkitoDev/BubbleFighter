@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6869712560561268501}
   - component: {fileID: 6869712560561268522}
-  - component: {fileID: 6869712560561268503}
-  - component: {fileID: 2687499420471781166}
-  - component: {fileID: 1117892461064102722}
+  - component: {fileID: 4460395654227718013}
+  - component: {fileID: 1926434425545299585}
+  - component: {fileID: 6192529750365823376}
   m_Layer: 0
-  m_Name: BubbleBullet
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6869712560561268503
+--- !u!114 &4460395654227718013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,10 +94,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6869712560561268523}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33b77dc0442d76d46bdeff2581715838, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cb9541b686a482d8f564dec790beba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!50 &2687499420471781166
+--- !u!50 &1926434425545299585
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -117,8 +117,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &1117892461064102722
+  m_Constraints: 4
+--- !u!58 &6192529750365823376
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

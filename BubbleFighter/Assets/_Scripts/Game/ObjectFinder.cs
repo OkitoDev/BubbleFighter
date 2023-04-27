@@ -1,3 +1,4 @@
+using Game.Enemies;
 using UnityEngine;
 
 namespace Game
@@ -6,5 +7,7 @@ namespace Game
     {
         public static Player Player => Object.FindObjectOfType<Player>();
         public static Camera Camera => Object.FindObjectOfType<Camera>();
+        private static EnemyManager _enemyManager;
+        public static EnemyManager EnemyManager => _enemyManager ??= Object.FindObjectOfType<EnemyManager>();
     }
 }

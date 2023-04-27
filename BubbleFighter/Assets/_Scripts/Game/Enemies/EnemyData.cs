@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using Enums;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game.Enemies
 {
@@ -8,13 +8,19 @@ namespace Game.Enemies
     public class EnemyData : ScriptableObject
     {
         public float worth;
-        public float healthPoints;
+        [Min(1f)] public float healthPoints = 1;
         public float movementSpeed;
         public float attackCooldown;
         public float collisionCooldown = 0.5f;
         public float collisionDamageMultiplier;
         public float damage;
         public Sprite sprite;
-        public List<EnemyVariants> variants = new List<EnemyVariants>();
+        public List<EnemyVariant> variants = new List<EnemyVariant>()
+        {
+            new EnemyVariant{enemyType = EnemyType.Normal},
+            new EnemyVariant{enemyType = EnemyType.Assassin},
+            new EnemyVariant{enemyType = EnemyType.Tank},
+            new EnemyVariant{enemyType = EnemyType.MiniBoss}
+        };
     }
 }

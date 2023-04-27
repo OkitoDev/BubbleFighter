@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Enums;
 using Extensions;
+using Game.Weapons.Projectiles;
+using Game.Weapons.Projectiles.Patterns;
 using UnityEngine;
 
 namespace Game.Weapons.Guns
@@ -9,10 +11,10 @@ namespace Game.Weapons.Guns
     public abstract class BaseGunWeapon : MonoBehaviour
     {
         [SerializeField] private GunData gunData;
-        private readonly ProjectileSpawner _projectileSpawner = new ProjectileSpawner();
+        private ProjectileFactory _projectileFactory;
         private Transform _baseFirePoint;
         private readonly List<Upgrade> _upgrades = new List<Upgrade>();
-
+        
         private float TotalBaseDamageFromUpgrades => _upgrades.Where(upgrade => upgrade.Type == UpgradeType.BaseDamage).ToList().Sum(upgrade => upgrade.Value);
         private float TotalDamageMultiplierFromUpgrades => Mathf.Max(1f,_upgrades.Where(upgrade => upgrade.Type == UpgradeType.DamageMultiplier).ToList().Sum(upgrade => upgrade.Value));
         private float TotalProjectileSizeFromUpgrades => Mathf.Max(1f, _upgrades.Where(upgrade => upgrade.Type == UpgradeType.ProjectileSize).ToList().Sum(upgrade => upgrade.Value));
@@ -21,14 +23,14 @@ namespace Game.Weapons.Guns
 
         // Stats
         private float _totalDamage;
-        private float _totalProjectileSize;
-        private float _totalProjectileSpeed;
+        private float _totalProjectileSizeMultiplier;
+        private float _totalProjectileSpeedMultiplier;
         private float _totalCooldown;
         
         private float _lastFireTime = Mathf.NegativeInfinity;
         private bool IsWeaponOffCooldown => Time.time - _lastFireTime > _totalCooldown;
         private bool _isAutoFireEnabled;
-        
+
         private void Awake()
         {
             RecalculateAllStats();
@@ -41,19 +43,20 @@ namespace Game.Weapons.Guns
             StartAutoFire();
         }
 
-        public virtual void Fire()
+        public void ManualFire()
         {
             if (!IsWeaponOffCooldown || _isAutoFireEnabled) return;
             
-            FireBubbleProjectile(_baseFirePoint);
+            Fire();
             _lastFireTime = Time.time;
         }
 
-        private void FireBubbleProjectile(Transform firePoint) => _projectileSpawner.SpawnBubbleProjectile(firePoint, 
-            Mouse.GetMouseWorldPosition - ObjectFinder.Player.FirePoint.position, gunData.projectileColors.GetRandomElement(), 
-            _totalProjectileSpeed,_totalProjectileSize, _totalDamage, true);
+        private void Fire()
+        {
+            _projectileFactory.CreateProjectile(_baseFirePoint.position, Quaternion.identity, GetProjectilePattern(), gunData.colliderTrigger);
+        }
         
-        public void RecalculateDamage()
+        private void RecalculateDamage()
         {
             float totalBaseDamage = gunData.baseDamage + TotalBaseDamageFromUpgrades + GlobalValues.GlobalPlayerDamage;
             float totalDamageMultiplier = gunData.damageMultiplier * Mathf.Max(1f, TotalDamageMultiplierFromUpgrades) * GlobalValues.GlobalPlayerDamageMultiplier;
@@ -61,17 +64,17 @@ namespace Game.Weapons.Guns
             _totalDamage = totalBaseDamage * totalDamageMultiplier;
         }
 
-        public void RecalculateProjectileSize()
+        private void RecalculateProjectileSize()
         {
-            _totalProjectileSize = gunData.projectileSize * TotalProjectileSizeFromUpgrades * GlobalValues.GlobalProjectileSize;
+            _totalProjectileSizeMultiplier = gunData.projectileSize * TotalProjectileSizeFromUpgrades * GlobalValues.GlobalProjectileSize;
         }
 
-        public void RecalculateProjectileSpeed()
+        private void RecalculateProjectileSpeed()
         {
-            _totalProjectileSpeed = gunData.projectileSpeed * TotalProjectileSpeedFromUpgrades * GlobalValues.GlobalProjectileSpeed;
+            _totalProjectileSpeedMultiplier = gunData.projectileSpeed * TotalProjectileSpeedFromUpgrades * GlobalValues.GlobalProjectileSpeed;
         }
 
-        public void RecalculateCooldown()
+        private void RecalculateCooldown()
         {
             _totalCooldown = Mathf.Max(gunData.cooldown * GlobalValues.GlobalPlayerCooldownReduction * TotalCooldownReductionFromUpgrades,0.001f);
             StartAutoFire();
@@ -83,6 +86,7 @@ namespace Game.Weapons.Guns
             RecalculateProjectileSize();
             RecalculateProjectileSpeed();
             RecalculateCooldown();
+            UpdateProjectileFactory();
         }
 
         public void AddUpgrade(Upgrade upgrade)
@@ -95,13 +99,16 @@ namespace Game.Weapons.Guns
         {
             if (!_isAutoFireEnabled) return;
             
-            CancelInvoke(nameof(AutoFire));
-            InvokeRepeating(nameof(AutoFire), _totalCooldown, _totalCooldown);
+            CancelInvoke(nameof(Fire));
+            InvokeRepeating(nameof(Fire), _totalCooldown, _totalCooldown);
         }
+        
+        protected abstract IProjectilePattern GetProjectilePattern();
 
-        private void AutoFire()
+        private void UpdateProjectileFactory()
         {
-            FireBubbleProjectile(_baseFirePoint);
+            _projectileFactory = new ProjectileFactory(GameAssets.Instance.prefabDefaultProjectile
+                ,gunData.projectileData, _totalDamage, _totalProjectileSizeMultiplier, _totalProjectileSpeedMultiplier, true);
         }
     }
 }
