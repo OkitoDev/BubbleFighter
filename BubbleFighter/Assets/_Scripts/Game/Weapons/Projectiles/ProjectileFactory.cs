@@ -1,4 +1,4 @@
-using Game.Weapons.Projectiles.Patterns;
+using Game.MovementPatterns;
 using UnityEngine;
 
 namespace Game.Weapons.Projectiles
@@ -22,12 +22,12 @@ namespace Game.Weapons.Projectiles
             _speedMultiplier = speedMultiplier;
         }
 
-        public void CreateProjectile(Vector3 position, Quaternion rotation, IProjectilePattern projectilePattern, bool colliderTriggerValue, Color? color = null)
+        public void CreateProjectile(Vector3 position, Quaternion rotation, IMovementPattern movementPattern, bool colliderTriggerValue, Color? color = null)
         {
             Color newColor = color ?? Color.white;
             Object.Instantiate(_projectilePrefab, position, rotation)
                 .SetProjectileData(_projectileData)
-                .SetProjectilePattern(projectilePattern)
+                .SetMovementPattern(movementPattern)
                 .SetDamage(_damage)
                 .SetColor(newColor)
                 .SetSizeMultiplier(_sizeMultiplier)

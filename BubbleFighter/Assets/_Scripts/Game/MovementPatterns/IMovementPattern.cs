@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Game.Weapons.Projectiles.Patterns
+namespace Game.MovementPatterns
 {
-    public interface IProjectilePattern
+    public interface IMovementPattern
     {
         public void UpdatePosition();
         public void SetValues(Transform transform, float speedMultiplier);

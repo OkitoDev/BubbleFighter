@@ -1,5 +1,5 @@
 using Enums;
-using Game.Weapons.Projectiles.Patterns;
+using Game.MovementPatterns;
 using Helpers;
 using Interfaces;
 using UnityEngine;
@@ -8,7 +8,7 @@ namespace Game.Weapons.Projectiles
 {
     public class Projectile : MonoBehaviour
     {
-        private IProjectilePattern _projectilePattern;
+        private IMovementPattern _movementPattern;
         private ProjectileData _projectileData;
         private SpriteRenderer _spriteRenderer;
         private float _speedMultiplier = 1f;
@@ -19,12 +19,12 @@ namespace Game.Weapons.Projectiles
         private void Start()
         {
             Invoke(nameof(SelfDestruction),_projectileData.lifespan);
-            _projectilePattern.SetValues(transform, _speedMultiplier);
+            _movementPattern.SetValues(transform, _speedMultiplier);
         }
 
         private void Update()
         {
-            _projectilePattern.UpdatePosition();
+            _movementPattern.UpdatePosition();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -49,9 +49,9 @@ namespace Game.Weapons.Projectiles
             return this;
         }
 
-        public Projectile SetProjectilePattern(IProjectilePattern projectilePattern)
+        public Projectile SetMovementPattern(IMovementPattern movementPattern)
         {
-            _projectilePattern = projectilePattern;
+            _movementPattern = movementPattern;
             return this;
         }
 

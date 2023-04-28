@@ -1,7 +1,6 @@
 using Game.Events;
 using Game.Weapons.Guns;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game
 {

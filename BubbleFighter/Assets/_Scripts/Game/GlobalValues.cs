@@ -28,7 +28,7 @@ namespace Game
         {
             GlobalPlayerDamage += damageToAdd;
         }
-        
+
         public static void AddDamageMultiplier(float damageMultiplierToAdd)
         {
             GlobalPlayerDamageMultiplier += damageMultiplierToAdd / 100f;

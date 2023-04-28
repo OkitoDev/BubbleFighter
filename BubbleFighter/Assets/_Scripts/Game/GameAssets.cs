@@ -1,7 +1,5 @@
-using Game.Weapons;
 using Game.Weapons.Projectiles;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game
 {

@@ -21,3 +21,14 @@ ________________________________________________________________________________
 
 - Guns and projectile spawning rewritten, new weapons can be easily added and projectile patterns can be easily added and attached to weapons
 Might not seem like much but it's a huge progress since adding new weapons and new bullets alongside new bullet patterns is now trivial
+
+______________________________________________________________________________________________________________________________
+28.04
+
+- Created an enemy spawner with waves 
+- IProjectilePattern is now a general IMovementPattern
+
+Next work on finalizing enemies (implementing attacks and giving gold to the player, dropping loot) and add tests for all sort of calculations
+Next would be implementing some differnet types of weapons and add some sort of unlocking system for them
+After that is done, GUI is next, it should work well and be generic for all weapon types.
+If the implementation of that is generic, adding new weapons/enemies/waves etc should be trivial, and the game is done!

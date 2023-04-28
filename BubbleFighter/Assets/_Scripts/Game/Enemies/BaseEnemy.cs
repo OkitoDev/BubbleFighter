@@ -1,5 +1,6 @@
 using System.Linq;
 using Enums;
+using Game.MovementPatterns;
 using Helpers;
 using Interfaces;
 using UnityEngine;
@@ -11,34 +12,36 @@ namespace Game.Enemies
     {
         public Transform Transform => transform;
 
-        private EnemyType _enemyType;
+        [SerializeField] private EnemyData enemyData;
+        protected EnemyType enemyType;
         private float _totalWorth;
         private float _totalHealthPoints;
-        private float _totalMovementSpeed;
-        private float _totalDamage;
+        protected float _totalDamage;
         private float _totalCollisionDamage;
         private float _totalAttackCooldown;
         private SpriteRenderer _spriteRenderer;
-        private EnemyData _enemyData;
         private EnemyVariant _enemyVariant;
-        private float lastCollisionWithPlayer;
+        private float _lastCollisionWithPlayer;
+        private IMovementPattern _movementPattern;
 
-        private bool IsCollisionWithPlayerOffCooldown => Time.time - lastCollisionWithPlayer > _enemyData.collisionCooldown;
+        private bool IsCollisionWithPlayerOffCooldown => Time.time - _lastCollisionWithPlayer > enemyData.collisionCooldown;
 
         public IEnemy Init(EnemyType enemyType, Vector3 spawnPlace)
         {
-            _enemyType = enemyType;
-            _enemyVariant = _enemyData.variants.FirstOrDefault(variant => variant.enemyType == _enemyType);
+            this.enemyType = enemyType;
+            _enemyVariant = enemyData.variants.FirstOrDefault(variant => variant.enemyType == this.enemyType);
             _spriteRenderer = GetComponent<SpriteRenderer>();
             SetVisuals();
             UpdateStats();
             transform.position = spawnPlace;
+            _movementPattern = GetMovementPattern();
+            _movementPattern.SetValues(transform, enemyData.movementSpeed);
             return this;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            Pathing();
+            _movementPattern?.UpdatePosition();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -46,7 +49,7 @@ namespace Game.Enemies
             if(other.gameObject.CompareTag(ProjectSettingsHelper.GetTagName(TagType.Player)) && IsCollisionWithPlayerOffCooldown)
             {
                 GlobalValues.DamagePlayer(_totalCollisionDamage);
-                lastCollisionWithPlayer = Time.time;
+                _lastCollisionWithPlayer = Time.time;
             }
         }
 
@@ -64,23 +67,21 @@ namespace Game.Enemies
 
         public void UpdateStats()
         {
-            _totalMovementSpeed = _enemyData.movementSpeed * GlobalValues.GlobalEnemyMovementSpeed *
-                                  _enemyVariant.movementSpeedMultiplier;
-            _totalWorth = _enemyData.worth * GlobalValues.GlobalEnemyWorth * _enemyVariant.worthMultiplier;
-            _totalHealthPoints = (_enemyData.healthPoints * GlobalValues.GlobalEnemyHealth) *
+            _totalWorth = enemyData.worth * GlobalValues.GlobalEnemyWorth * _enemyVariant.worthMultiplier;
+            _totalHealthPoints = (enemyData.healthPoints * GlobalValues.GlobalEnemyHealth) *
                                  (GlobalValues.GlobalEnemyHealthMultiplier) * _enemyVariant.healthPointsMultiplier;
-            _totalDamage = (_enemyData.damage + GlobalValues.GlobalEnemyDamage) *
+            _totalDamage = (enemyData.damage + GlobalValues.GlobalEnemyDamage) *
                            GlobalValues.GlobalEnemyDamageMultiplier * _enemyVariant.damageMultiplier;
-            _totalAttackCooldown = _enemyData.attackCooldown * GlobalValues.GlobalEnemyCooldownReduction;
+            _totalAttackCooldown = enemyData.attackCooldown * GlobalValues.GlobalEnemyCooldownReduction;
             _totalAttackCooldown *= (100f - _enemyVariant.cooldownDecrease) / 100f;
             _totalAttackCooldown = Mathf.Max(_totalAttackCooldown,0.001f);
-            _totalCollisionDamage = _enemyData.damage * _enemyData.collisionDamageMultiplier;
+            _totalCollisionDamage = enemyData.damage * enemyData.collisionDamageMultiplier;
             RestartAttackPattern();
         }
 
         private void SetVisuals()
         {
-            _spriteRenderer.sprite = _enemyData.sprite;
+            _spriteRenderer.sprite = enemyData.sprite;
             _spriteRenderer.color = _enemyVariant.color;
             transform.localScale *= _enemyVariant.sizeMultiplier;
         }
@@ -90,8 +91,9 @@ namespace Game.Enemies
             CancelInvoke(nameof(Attack));
             InvokeRepeating(nameof(Attack),_totalAttackCooldown,_totalAttackCooldown);
         }
-
-        protected abstract void Pathing();
+        
+        protected abstract IMovementPattern GetMovementPattern();
+        
         protected abstract void Attack();
     }
 }

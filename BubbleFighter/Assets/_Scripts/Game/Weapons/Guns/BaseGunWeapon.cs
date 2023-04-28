@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Enums;
-using Extensions;
+using Game.MovementPatterns;
 using Game.Weapons.Projectiles;
-using Game.Weapons.Projectiles.Patterns;
 using UnityEngine;
 
 namespace Game.Weapons.Guns
@@ -53,7 +52,7 @@ namespace Game.Weapons.Guns
 
         private void Fire()
         {
-            _projectileFactory.CreateProjectile(_baseFirePoint.position, Quaternion.identity, GetProjectilePattern(), gunData.colliderTrigger);
+            _projectileFactory.CreateProjectile(_baseFirePoint.position, Quaternion.identity, GetMovementPattern(), gunData.colliderTrigger);
         }
         
         private void RecalculateDamage()
@@ -103,7 +102,7 @@ namespace Game.Weapons.Guns
             InvokeRepeating(nameof(Fire), _totalCooldown, _totalCooldown);
         }
         
-        protected abstract IProjectilePattern GetProjectilePattern();
+        protected abstract IMovementPattern GetMovementPattern();
 
         private void UpdateProjectileFactory()
         {

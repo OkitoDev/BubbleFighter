@@ -17,10 +17,10 @@ namespace Game.Enemies
         public Sprite sprite;
         public List<EnemyVariant> variants = new List<EnemyVariant>()
         {
-            new EnemyVariant{enemyType = EnemyType.Normal},
-            new EnemyVariant{enemyType = EnemyType.Assassin},
-            new EnemyVariant{enemyType = EnemyType.Tank},
-            new EnemyVariant{enemyType = EnemyType.MiniBoss}
+            new EnemyVariant{enemyType = EnemyType.Normal, cooldownDecrease = 0f, damageMultiplier = 1f, sizeMultiplier = 1f, worthMultiplier = 1f, healthPointsMultiplier = 1f, movementSpeedMultiplier = 1f, color = Color.white},
+            new EnemyVariant{enemyType = EnemyType.Tank, cooldownDecrease = 0f, damageMultiplier = 1f, sizeMultiplier = 2f, worthMultiplier = 1.5f, healthPointsMultiplier = 3f, movementSpeedMultiplier = 0.75f, color = Color.green},
+            new EnemyVariant{enemyType = EnemyType.Assassin, cooldownDecrease = 10f, damageMultiplier = 1.5f, sizeMultiplier = 0.75f, worthMultiplier = 1.5f, healthPointsMultiplier = 0.75f, movementSpeedMultiplier = 2f, color = Color.red},
+            new EnemyVariant{enemyType = EnemyType.MiniBoss, cooldownDecrease = 50f, damageMultiplier = 3f, sizeMultiplier = 5f, worthMultiplier = 5f, healthPointsMultiplier = 5f, movementSpeedMultiplier = 0.75f, color = Color.gray},
         };
     }
 }

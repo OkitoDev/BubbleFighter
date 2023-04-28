@@ -1,15 +1,20 @@
-using System;
 using System.Collections.Generic;
 using Enums;
-using Helpers;
 using Interfaces;
 using UnityEngine;
 
 namespace Game.Enemies
 {
-    public class EnemyManager : Singleton<EnemyManager>
+    [RequireComponent(typeof(EnemySpawner))]
+    public class EnemyManager : MonoBehaviour
     {
+        private EnemySpawner _enemySpawner;
         private readonly List<IEnemy> _enemies = new List<IEnemy>();
+
+        private void Start()
+        {
+            _enemySpawner = GetComponent<EnemySpawner>();
+        }
 
         public void SpawnEnemy(BaseEnemy enemyPrefab, EnemyType enemyType, Vector3 spawnPlace)
         {

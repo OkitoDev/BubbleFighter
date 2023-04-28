@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Helpers;
+using UnityEngine;
 
 namespace Extensions
 {
@@ -7,7 +7,7 @@ namespace Extensions
     {
         public static T GetRandomElement<T>(this List<T> list)
         {
-            int randomIndex = RandomHelper.Random.Next(list.Count);
+            int randomIndex = Random.Range(0, list.Count);
             return list[randomIndex];
         }
     }

@@ -1,14 +1,12 @@
-using Game.Weapons.Projectiles;
-using Game.Weapons.Projectiles.Patterns;
-using UnityEngine;
+using Game.MovementPatterns;
 
 namespace Game.Weapons.Guns
 {
     public class BubbleGun : BaseGunWeapon
     {
-        protected override IProjectilePattern GetProjectilePattern()
+        protected override IMovementPattern GetMovementPattern()
         {
-            return new ProjectilePatternAimTowardsMouse();
+            return new MovementPatternAimTowardsMouse();
         }
     }
 }
