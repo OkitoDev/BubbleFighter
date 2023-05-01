@@ -28,6 +28,7 @@ namespace Game
         private void Awake()
         {
             backgroundPrefab = new GameObject();
+            backgroundPrefab.SetActive(true);
             backgroundPrefab.AddComponent<SpriteRenderer>().sprite = backgroundSprite;
             var backgroundScale = backgroundPrefab.transform.localScale;
             _backgroundWidth = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.size.x * backgroundScale.x;

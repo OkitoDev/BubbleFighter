@@ -14,7 +14,6 @@ namespace Game.Enemies
         public float collisionCooldown = 0.5f;
         public float collisionDamageMultiplier;
         public float damage;
-        public Sprite sprite;
         public List<EnemyVariant> variants = new List<EnemyVariant>()
         {
             new EnemyVariant{enemyType = EnemyType.Normal, cooldownDecrease = 0f, damageMultiplier = 1f, sizeMultiplier = 1f, worthMultiplier = 1f, healthPointsMultiplier = 1f, movementSpeedMultiplier = 1f, color = Color.white},

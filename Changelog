@@ -32,3 +32,11 @@ Next work on finalizing enemies (implementing attacks and giving gold to the pla
 Next would be implementing some differnet types of weapons and add some sort of unlocking system for them
 After that is done, GUI is next, it should work well and be generic for all weapon types.
 If the implementation of that is generic, adding new weapons/enemies/waves etc should be trivial, and the game is done!
+
+______________________________________________________________________________________________________________________________
+01.05
+
+- Added support for proper collisions between projectiles and player/enemies depending on who spawned them
+- Enemies now die on collision with player after inflicting damage
+- Added movement pattern around player in circles and around a point in circles
+Next: Movement pattern in spirals around a point

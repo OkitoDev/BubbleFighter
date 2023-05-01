@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Enums;
 using Game.MovementPatterns;
@@ -8,6 +9,7 @@ using UnityEngine;
 namespace Game.Enemies
 {
     [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Collider2D))]
     public abstract class BaseEnemy : MonoBehaviour, IEnemy
     {
         public Transform Transform => transform;
@@ -23,6 +25,7 @@ namespace Game.Enemies
         private EnemyVariant _enemyVariant;
         private float _lastCollisionWithPlayer;
         private IMovementPattern _movementPattern;
+        private Rigidbody2D _rigidbody;
 
         private bool IsCollisionWithPlayerOffCooldown => Time.time - _lastCollisionWithPlayer > enemyData.collisionCooldown;
 
@@ -36,12 +39,14 @@ namespace Game.Enemies
             transform.position = spawnPlace;
             _movementPattern = GetMovementPattern();
             _movementPattern.SetValues(transform, enemyData.movementSpeed);
+            _rigidbody = GetComponent<Rigidbody2D>();
             return this;
         }
 
         private void FixedUpdate()
         {
             _movementPattern?.UpdatePosition();
+            _rigidbody.velocity = Vector2.zero;
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -50,9 +55,11 @@ namespace Game.Enemies
             {
                 GlobalValues.DamagePlayer(_totalCollisionDamage);
                 _lastCollisionWithPlayer = Time.time;
+                Destroy(gameObject);
             }
         }
-
+        
+        
         public void TakeDamage(float damageAmount)
         {
             _totalHealthPoints -= damageAmount;
@@ -68,7 +75,7 @@ namespace Game.Enemies
         public void UpdateStats()
         {
             _totalWorth = enemyData.worth * GlobalValues.GlobalEnemyWorth * _enemyVariant.worthMultiplier;
-            _totalHealthPoints = (enemyData.healthPoints * GlobalValues.GlobalEnemyHealth) *
+            _totalHealthPoints = (enemyData.healthPoints + GlobalValues.GlobalEnemyHealth) *
                                  (GlobalValues.GlobalEnemyHealthMultiplier) * _enemyVariant.healthPointsMultiplier;
             _totalDamage = (enemyData.damage + GlobalValues.GlobalEnemyDamage) *
                            GlobalValues.GlobalEnemyDamageMultiplier * _enemyVariant.damageMultiplier;
@@ -81,7 +88,6 @@ namespace Game.Enemies
 
         private void SetVisuals()
         {
-            _spriteRenderer.sprite = enemyData.sprite;
             _spriteRenderer.color = _enemyVariant.color;
             transform.localScale *= _enemyVariant.sizeMultiplier;
         }
@@ -90,6 +96,11 @@ namespace Game.Enemies
         {
             CancelInvoke(nameof(Attack));
             InvokeRepeating(nameof(Attack),_totalAttackCooldown,_totalAttackCooldown);
+        }
+
+        protected virtual IMovementPattern GetProjectileMovementPattern()
+        {
+            return new MovementPatternMoveTowardsPlayer();
         }
         
         protected abstract IMovementPattern GetMovementPattern();

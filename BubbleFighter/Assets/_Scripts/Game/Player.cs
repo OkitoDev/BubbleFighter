@@ -44,9 +44,21 @@ namespace Game
             if (Input.GetKeyDown(KeyCode.F))
             {
                 GlobalValues.DecreaseCooldown(99f);
+                GlobalValues.AddDamage(1f);
+                GlobalValues.AddDamageMultiplier(1f);
+                GlobalValues.AddProjectileSize(10f);
+                GlobalValues.AddProjectileSpeed(5000f);
+                statsChangeEvent.Raise();
+                GlobalValues.AddEnemyHealthMultiplier(10000f);
+                FindObjectOfType<BubbleGun>().EnableAutoFire();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                GlobalValues.DecreaseCooldown(5f);
                 GlobalValues.AddDamage(100f);
                 GlobalValues.AddDamageMultiplier(100f);
-                GlobalValues.AddProjectileSize(10f);
+                GlobalValues.AddProjectileSize(5f);
                 GlobalValues.AddProjectileSpeed(500f);
                 statsChangeEvent.Raise();
                 FindObjectOfType<BubbleGun>().EnableAutoFire();

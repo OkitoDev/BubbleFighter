@@ -1,5 +1,4 @@
 using Game.MovementPatterns;
-using UnityEngine;
 
 namespace Game.Enemies.EnemyList
 {
@@ -12,7 +11,7 @@ namespace Game.Enemies.EnemyList
 
         protected override void Attack()
         {
-            Debug.Log($"{enemyType} is attacking for {_totalDamage} damage!");
+            //Debug.Log($"{enemyType} is attacking for {_totalDamage} damage!");
         }
     }
 }

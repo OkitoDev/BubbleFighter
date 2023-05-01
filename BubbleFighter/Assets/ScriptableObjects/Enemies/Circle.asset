@@ -19,7 +19,6 @@ MonoBehaviour:
   collisionCooldown: 0.5
   collisionDamageMultiplier: 1
   damage: 1
-  sprite: {fileID: 21300000, guid: 86e2be6309a92c547a4da69c800ecc21, type: 3}
   variants:
   - enemyType: 0
     color: {r: 1, g: 1, b: 1, a: 1}
@@ -47,7 +46,7 @@ MonoBehaviour:
     cooldownDecrease: 10
   - enemyType: 3
     color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    healthPointsMultiplier: 5
+    healthPointsMultiplier: 10
     worthMultiplier: 5
     movementSpeedMultiplier: 0.75
     damageMultiplier: 3

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CirclesWave
   m_EditorClassIdentifier: 
   spawnableEnemies:
-  - enemy: {fileID: 5308733366724892761, guid: 05970b1d9a29776428a6f782a7eeae52, type: 3}
+  - enemy: {fileID: 9204251327588975886, guid: 05970b1d9a29776428a6f782a7eeae52, type: 3}
     spawnProbability: 1
   maxEnemies: 1
   spawnRate: 1

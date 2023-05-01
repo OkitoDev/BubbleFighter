@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BubbleThrower
   m_EditorClassIdentifier: 
   cooldown: 0.2
-  baseDamage: 3
+  baseDamage: 1
   damageMultiplier: 1
   projectileSize: 1
   projectileSpeed: 1
-  colliderTrigger: 0
+  colliderTrigger: 1
   projectileData: {fileID: 11400000, guid: 5ad4fcc97404d5e4391e8c8665df6a42, type: 2}
   projectileColors:
   - {r: 1, g: 0, b: 0, a: 1}

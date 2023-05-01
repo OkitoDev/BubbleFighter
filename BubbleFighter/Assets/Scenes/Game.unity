@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 620010995}
   - component: {fileID: 620010996}
   - component: {fileID: 620010997}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -365,12 +365,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.012963176, y: 0.0011522472}
+  m_Offset: {x: -0.002204448, y: 0.0011522472}
   serializedVersion: 2
-  m_Radius: 0.40654874
+  m_Radius: 0.16300914
 --- !u!50 &620010996
 Rigidbody2D:
   serializedVersion: 4
@@ -391,7 +391,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &620010997
 Animator:
   serializedVersion: 3
@@ -697,9 +697,6 @@ MonoBehaviour:
   waves:
   - {fileID: 11400000, guid: 74003d7dc87392048bdc91b79d5e7aac, type: 2}
   timePerWave: 5
-  enemyHealthMultiplier: 1
-  enemyAttackMultiplier: 1
-  enemyWorthMultiplier: 1
 --- !u!4 &1105148488
 Transform:
   m_ObjectHideFlags: 0

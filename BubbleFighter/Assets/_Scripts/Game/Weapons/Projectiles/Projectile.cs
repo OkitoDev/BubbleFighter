@@ -1,3 +1,4 @@
+using System;
 using Enums;
 using Game.MovementPatterns;
 using Helpers;
@@ -28,6 +29,21 @@ namespace Game.Weapons.Projectiles
         }
 
         private void OnCollisionEnter2D(Collision2D other)
+        {
+            switch (_wasCreatedByPlayer)
+            {
+                case true when other.gameObject.TryGetComponent(out IEnemy enemy):
+                    enemy.TakeDamage(_damage);
+                    Destroy(gameObject);
+                    break;
+                case false when other.gameObject.CompareTag(ProjectSettingsHelper.GetTagName(TagType.Player)):
+                    GlobalValues.DamagePlayer(_damage);
+                    Destroy(gameObject);
+                    break;
+            }
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
         {
             switch (_wasCreatedByPlayer)
             {
@@ -77,7 +93,13 @@ namespace Game.Weapons.Projectiles
         public Projectile SetBulletCreatedByPlayer(bool wasCreatedByPlayer)
         {
             _wasCreatedByPlayer = wasCreatedByPlayer;
+            SetLayer(_wasCreatedByPlayer ? LayerType.ProjectileSpawnedByPlayer : LayerType.ProjectileSpawnedByEnemy);
             return this;
+        }
+
+        private void SetLayer(LayerType layerType)
+        {
+            gameObject.layer = ProjectSettingsHelper.GetLayerId(layerType);
         }
 
         public Projectile SetColor(Color color)

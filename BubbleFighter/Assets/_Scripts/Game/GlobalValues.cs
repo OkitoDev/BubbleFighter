@@ -102,6 +102,7 @@ namespace Game
         public static void DamagePlayer(float damageAmount)
         {
             PlayerHealth -= damageAmount;
+            Debug.Log(PlayerHealth);
         }
     }
 }

@@ -7,10 +7,10 @@ using UnityEngine;
 
 namespace Game.Weapons.Guns
 {
-    public abstract class BaseGunWeapon : MonoBehaviour
+    public abstract class BaseProjectileWeapon : MonoBehaviour
     {
         [SerializeField] private GunData gunData;
-        private ProjectileFactory _projectileFactory;
+        private ProjectileSpawner _projectileSpawner;
         private Transform _baseFirePoint;
         private readonly List<Upgrade> _upgrades = new List<Upgrade>();
         
@@ -52,7 +52,7 @@ namespace Game.Weapons.Guns
 
         private void Fire()
         {
-            _projectileFactory.CreateProjectile(_baseFirePoint.position, Quaternion.identity, GetMovementPattern(), gunData.colliderTrigger);
+            _projectileSpawner.SpawnProjectile(_baseFirePoint.position, Quaternion.identity, GetMovementPattern(), gunData.colliderTrigger);
         }
         
         private void RecalculateDamage()
@@ -106,7 +106,7 @@ namespace Game.Weapons.Guns
 
         private void UpdateProjectileFactory()
         {
-            _projectileFactory = new ProjectileFactory(GameAssets.Instance.prefabDefaultProjectile
+            _projectileSpawner = new ProjectileSpawner(GameAssets.Instance.prefabDefaultProjectile
                 ,gunData.projectileData, _totalDamage, _totalProjectileSizeMultiplier, _totalProjectileSpeedMultiplier, true);
         }
     }

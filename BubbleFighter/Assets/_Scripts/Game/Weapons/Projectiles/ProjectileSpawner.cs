@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Weapons.Projectiles
 {
-    public class ProjectileFactory
+    public class ProjectileSpawner
     {
         private ProjectileData _projectileData;
         private readonly Projectile _projectilePrefab;
@@ -12,7 +12,7 @@ namespace Game.Weapons.Projectiles
         private float _speedMultiplier;
         private readonly bool _wasCreatedByPlayer;
 
-        public ProjectileFactory(Projectile projectilePrefab, ProjectileData projectileData, float damage, float sizeMultiplier = 1f, float speedMultiplier = 1f, bool wasCreatedByPlayer = false)
+        public ProjectileSpawner(Projectile projectilePrefab, ProjectileData projectileData, float damage, float sizeMultiplier = 1f, float speedMultiplier = 1f, bool wasCreatedByPlayer = false)
         {
             _projectilePrefab = projectilePrefab;
             _wasCreatedByPlayer = wasCreatedByPlayer;
@@ -22,7 +22,7 @@ namespace Game.Weapons.Projectiles
             _speedMultiplier = speedMultiplier;
         }
 
-        public void CreateProjectile(Vector3 position, Quaternion rotation, IMovementPattern movementPattern, bool colliderTriggerValue, Color? color = null)
+        public void SpawnProjectile(Vector3 position, Quaternion rotation, IMovementPattern movementPattern, bool colliderTriggerValue, Color? color = null)
         {
             Color newColor = color ?? Color.white;
             Object.Instantiate(_projectilePrefab, position, rotation)

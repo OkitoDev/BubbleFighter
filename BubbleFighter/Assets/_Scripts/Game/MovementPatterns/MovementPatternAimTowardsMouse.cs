@@ -8,7 +8,8 @@ namespace Game.MovementPatterns
         public override void SetValues(Transform transform, float speedMultiplier)
         {
             base.SetValues(transform, speedMultiplier);
-            _direction = (Mouse.GetMouseWorldPosition - targetTransform.position).normalized;
+            _direction = (Vector2)(Mouse.GetMouseWorldPosition - targetTransform.position);
+            _direction = _direction.normalized;
         }
 
         public void UpdatePosition()
