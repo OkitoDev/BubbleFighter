@@ -40,3 +40,8 @@ ________________________________________________________________________________
 - Enemies now die on collision with player after inflicting damage
 - Added movement pattern around player in circles and around a point in circles
 Next: Movement pattern in spirals around a point
+
+______________________________________________________________________________________________________________________________
+02.05
+
+- Added spiral movement movement pattern (with constant movement speed option but it doesn't quite work well yet)

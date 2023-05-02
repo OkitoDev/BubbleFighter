@@ -30,6 +30,8 @@ namespace Game
             backgroundPrefab = new GameObject();
             backgroundPrefab.SetActive(true);
             backgroundPrefab.AddComponent<SpriteRenderer>().sprite = backgroundSprite;
+            backgroundPrefab.transform.parent = transform;
+            backgroundPrefab.GetComponent<SpriteRenderer>().sortingOrder = -15;
             var backgroundScale = backgroundPrefab.transform.localScale;
             _backgroundWidth = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.size.x * backgroundScale.x;
             _backgroundHeight = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.size.y * backgroundScale.y;
