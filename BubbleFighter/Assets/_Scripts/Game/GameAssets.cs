@@ -20,5 +20,6 @@ namespace Game
         }
         
         public Projectile prefabDefaultProjectile;
+        public Coin prefabCoin;
     }
 }

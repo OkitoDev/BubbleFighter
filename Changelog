@@ -45,3 +45,8 @@ ________________________________________________________________________________
 02.05
 
 - Added spiral movement movement pattern (with constant movement speed option but it doesn't quite work well yet)
+
+______________________________________________________________________________________________________________________________
+04.05
+
+- Implemented spawning coins after enemy dies from a player hit

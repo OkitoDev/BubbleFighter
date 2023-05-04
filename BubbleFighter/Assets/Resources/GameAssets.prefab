@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabDefaultProjectile: {fileID: 4460395654227718013, guid: e163d80ab8b466d4f96e08a6f6efbe27, type: 3}
+  prefabCoin: {fileID: 8180608699208898747, guid: 11c405e2e7f75a243ac15573a4a14cc2, type: 3}

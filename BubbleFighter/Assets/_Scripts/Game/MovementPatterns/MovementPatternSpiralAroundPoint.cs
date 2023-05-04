@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Game.MovementPatterns
 {
-    // TODO
     public class SpiralMovementData
     {
         public Vector2 initialRadius = new Vector2(0, 0);
@@ -59,6 +58,7 @@ namespace Game.MovementPatterns
             _radius += 0.001f * _spiralMovementData.radiusExpansionMultiplier;
         }
         
+        // TODO not working well yet
         private void MoveObjectInSpiralWayConstantSpeed()
         {
             // TODO Tis doesn't quite work

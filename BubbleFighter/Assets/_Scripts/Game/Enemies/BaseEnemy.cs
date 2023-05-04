@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Enums;
 using Game.MovementPatterns;
@@ -15,10 +14,10 @@ namespace Game.Enemies
         public Transform Transform => transform;
 
         [SerializeField] private EnemyData enemyData;
-        protected EnemyType enemyType;
+        private EnemyType _enemyType;
         private float _totalWorth;
         private float _totalHealthPoints;
-        protected float _totalDamage;
+        private float _totalDamage;
         private float _totalCollisionDamage;
         private float _totalAttackCooldown;
         private SpriteRenderer _spriteRenderer;
@@ -31,8 +30,8 @@ namespace Game.Enemies
 
         public IEnemy Init(EnemyType enemyType, Vector3 spawnPlace)
         {
-            this.enemyType = enemyType;
-            _enemyVariant = enemyData.variants.FirstOrDefault(variant => variant.enemyType == this.enemyType);
+            this._enemyType = enemyType;
+            _enemyVariant = enemyData.variants.FirstOrDefault(variant => variant.enemyType == this._enemyType);
             _spriteRenderer = GetComponent<SpriteRenderer>();
             SetVisuals();
             UpdateStats();
@@ -55,7 +54,7 @@ namespace Game.Enemies
             {
                 GlobalValues.DamagePlayer(_totalCollisionDamage);
                 _lastCollisionWithPlayer = Time.time;
-                Destroy(gameObject);
+                Die();
             }
         }
         
@@ -63,13 +62,20 @@ namespace Game.Enemies
         public void TakeDamage(float damageAmount)
         {
             _totalHealthPoints -= damageAmount;
-            if (_totalHealthPoints < 0f) Die();
+            if (!(_totalHealthPoints < 0f)) return;
+            
+            SpawnACoin();
+            Die();
         }
 
         public void Die()
         {
-            GlobalValues.AddPlayerGold(_totalWorth);
             Destroy(gameObject);
+        }
+
+        private void SpawnACoin()
+        {
+            Instantiate(GameAssets.Instance.prefabCoin, transform.position, Quaternion.identity).Init(Mathf.Ceil(_totalWorth));
         }
 
         public void UpdateStats()
