@@ -12,7 +12,7 @@ namespace Game.MovementPatterns
 
         public MovementPatternCircleAroundPlayer(float radius, float rotateSpeed)
         {
-            _player = Services.GetServiceFromScene<Player.Player>().transform;
+            _player = Services.GetServiceFromComponent<Player.Player>().transform;
             _radius = radius;
             _rotateSpeed = rotateSpeed;
         }

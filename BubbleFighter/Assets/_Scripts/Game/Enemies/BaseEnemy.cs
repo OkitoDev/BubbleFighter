@@ -1,5 +1,6 @@
 using System.Linq;
 using Enums;
+using Game.Audio;
 using Game.MovementPatterns;
 using Interfaces;
 using UnityEngine;
@@ -30,7 +31,8 @@ namespace Game.Enemies
 
         public IEnemy Init(EnemyType enemyType, Vector3 spawnPlace)
         {
-            this._enemyType = enemyType;
+            SoundManager.PlaySound("TestEnemySpawn", transform.position);
+            _enemyType = enemyType;
             _enemyVariant = enemyData.variants.FirstOrDefault(variant => variant.enemyType == this._enemyType);
             _spriteRenderer = GetComponent<SpriteRenderer>();
             SetVisuals();

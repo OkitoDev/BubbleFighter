@@ -5,7 +5,7 @@ namespace Utilities
 {
     public static class Services
     {
-        public static T GetServiceFromScene<T>() where T : Component
+        public static T GetServiceFromComponent<T>() where T : Component
         {
             var instanceList = Object.FindObjectsOfType<T>();
             

@@ -30,7 +30,7 @@ namespace Game.Weapons.Guns
 
         protected override List<Vector3> GetProjectileSpawnPointsOffsets()
         {
-            return GeometryHelper.GenerateCircularSpawnOffsets(8,0.5f,15);
+            return GeometryHelper.GenerateSpawnPointOffsetsOnACircle(8,0.5f,15);
         }
     }
 }

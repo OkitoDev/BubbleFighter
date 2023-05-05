@@ -9,9 +9,18 @@ namespace Game.Collectibles
         private float _worth;
         private SpriteRenderer _spriteRenderer;
         [SerializeField] private Sprite sprite;
+        
+        // TODO Quick way to do this, redo later
+        private static Transform _coinsParent;
 
         public void Init(float worth)
         {
+            if (_coinsParent == null)
+            {
+                _coinsParent = new GameObject("Coins").transform;
+            }
+
+            transform.parent = _coinsParent;
             _worth = worth;
             _spriteRenderer = GetComponent<SpriteRenderer>();
             SetVisuals();

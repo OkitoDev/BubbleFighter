@@ -24,7 +24,7 @@ namespace Game.Enemies
         private void Awake()
         {
             _enemyManager = GetComponent<EnemyManager>();
-            _player = Services.GetServiceFromScene<Player.Player>().transform;
+            _player = Services.GetServiceFromComponent<Player.Player>().transform;
             _currentWave = waves.FirstOrDefault();
             Invoke(nameof(StartNextWave),timePerWave);
             RestartSpawning();

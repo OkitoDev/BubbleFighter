@@ -10,7 +10,7 @@ namespace Game.MovementPatterns
         public override void SetValues(Transform transform, float speedMultiplier)
         {
             base.SetValues(transform, speedMultiplier);
-            _playerTransform = Services.GetServiceFromScene<Player.Player>().transform;
+            _playerTransform = Services.GetServiceFromComponent<Player.Player>().transform;
             _initialDirection = (targetTransform.position - _playerTransform.position).normalized;
         }
         public void UpdatePosition()

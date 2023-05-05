@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Enums;
+using Game.Audio;
 using Game.MovementPatterns;
 using Game.Projectiles;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace Game.Weapons.Guns
         private void Awake()
         {
             RecalculateAllStats();
-            _baseFirePoint = Services.GetServiceFromScene<Player.Player>().FirePoint;
+            _baseFirePoint = Services.GetServiceFromComponent<Player.Player>().FirePoint;
             _projectileSpawnPointsOffsets = GetProjectileSpawnPointsOffsets();
         }
 
@@ -57,6 +58,7 @@ namespace Game.Weapons.Guns
         {
             foreach (var offset in _projectileSpawnPointsOffsets)
             {
+                SoundManager.PlaySound("TestShoot", transform.position);
                 _projectileSpawner.SpawnProjectile(_baseFirePoint.position + offset, Quaternion.identity, GetMovementPattern(), gunData.colliderTrigger);
             }
         }

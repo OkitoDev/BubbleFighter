@@ -14,7 +14,7 @@ namespace Utilities
         /// <param name="radius">Radius of the circle</param>
         /// <param name="initialRotation">Initial rotation of the first point</param>
         /// <returns></returns>
-    public static List<Vector3> GenerateCircularSpawnOffsets(int spawnPointCount, float radius, float initialRotation = 0)
+    public static List<Vector3> GenerateSpawnPointOffsetsOnACircle(int spawnPointCount, float radius, float initialRotation = 0)
     {
         var offsets = new List<Vector3>();
         float angleIncrement = 2 * Mathf.PI / spawnPointCount;

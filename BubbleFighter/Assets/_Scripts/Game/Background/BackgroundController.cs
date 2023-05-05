@@ -36,7 +36,7 @@ namespace Game.Background
             var backgroundScale = backgroundPrefab.transform.localScale;
             _backgroundWidth = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.size.x * backgroundScale.x;
             _backgroundHeight = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.size.y * backgroundScale.y;
-            _playerTransform = Services.GetServiceFromScene<Player.Player>().transform;
+            _playerTransform = Services.GetServiceFromComponent<Player.Player>().transform;
             _backgrounds.Add(Instantiate(backgroundPrefab, transform).transform);
             var mainCamera = Camera.main;
             _cameraWidth = mainCamera.orthographicSize * mainCamera.aspect;

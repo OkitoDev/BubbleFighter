@@ -4,7 +4,6 @@ namespace Utilities
 {
     public static class RandomUtils
     {
-
         public static Vector2 GetRandomPositionFromVector(Vector2 originalVector, int minDistance, int maxDistance)
         {
             float distance = Random.Range(minDistance, maxDistance);
