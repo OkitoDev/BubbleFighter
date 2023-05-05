@@ -1,7 +1,7 @@
 using Game.MovementPatterns;
 using UnityEngine;
 
-namespace Game.Weapons.Projectiles
+namespace Game.Projectiles
 {
     public class ProjectileSpawner
     {

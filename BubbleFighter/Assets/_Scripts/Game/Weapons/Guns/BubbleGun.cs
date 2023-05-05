@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Game.MovementPatterns;
 using UnityEngine;
+using Utilities;
 
 namespace Game.Weapons.Guns
 {
@@ -7,7 +9,8 @@ namespace Game.Weapons.Guns
     {
         protected override IMovementPattern GetMovementPattern()
         {
-            return new MovementPatternAimTowardsMouse();
+            return new MovementPatternAwayFromPlayer();
+            //return new MovementPatternAimTowardsMouse();
             //return new MovementPatternSpiralFromInitialPosition();
             //return new MovementPatternCircleAroundPlayer(5f,100f);
             //return new MovementPatternCircleAroundPoint(10f,5f,Vector2.zero);
@@ -23,6 +26,11 @@ namespace Game.Weapons.Guns
                 constantSpeed = true
             });
             */
+        }
+
+        protected override List<Vector3> GetProjectileSpawnPointsOffsets()
+        {
+            return GeometryHelper.GenerateCircularSpawnOffsets(8,0.5f,15);
         }
     }
 }

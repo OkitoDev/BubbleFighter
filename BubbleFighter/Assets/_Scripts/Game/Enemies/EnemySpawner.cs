@@ -3,8 +3,8 @@ using System.Linq;
 using Enums;
 using Extensions;
 using Game.Enemies.Waves;
-using Helpers;
 using UnityEngine;
+using Utilities;
 
 namespace Game.Enemies
 {
@@ -24,7 +24,7 @@ namespace Game.Enemies
         private void Awake()
         {
             _enemyManager = GetComponent<EnemyManager>();
-            _player = ObjectFinder.Player.transform;
+            _player = Services.GetServiceFromScene<Player.Player>().transform;
             _currentWave = waves.FirstOrDefault();
             Invoke(nameof(StartNextWave),timePerWave);
             RestartSpawning();
@@ -61,7 +61,7 @@ namespace Game.Enemies
 
         private Vector3 GetRandomSpawnPoint()
         {
-            return RandomHelper.GetRandomPositionFromVector((Vector2) _player.transform.position, 10, 20);
+            return RandomUtils.GetRandomPositionFromVector((Vector2) _player.transform.position, 10, 20);
         }
 
         private EnemyType GetRandomEnemyType()

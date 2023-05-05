@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utilities;
 
-namespace Game
+namespace Game.Background
 {
     // TODO that's really bad but it works and I won't need to modify it ever so for now that's fine
     public class BackgroundController : MonoBehaviour
@@ -35,7 +36,7 @@ namespace Game
             var backgroundScale = backgroundPrefab.transform.localScale;
             _backgroundWidth = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.size.x * backgroundScale.x;
             _backgroundHeight = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.size.y * backgroundScale.y;
-            _playerTransform = ObjectFinder.Player.transform;
+            _playerTransform = Services.GetServiceFromScene<Player.Player>().transform;
             _backgrounds.Add(Instantiate(backgroundPrefab, transform).transform);
             var mainCamera = Camera.main;
             _cameraWidth = mainCamera.orthographicSize * mainCamera.aspect;

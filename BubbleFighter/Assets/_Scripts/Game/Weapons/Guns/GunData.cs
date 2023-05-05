@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Game.Weapons.Projectiles;
+using Game.Projectiles;
 using UnityEngine;
 
 namespace Game.Weapons.Guns

@@ -1,8 +1,8 @@
 using Enums;
-using Helpers;
 using UnityEngine;
+using Utilities;
 
-namespace Game
+namespace Game.Collectibles
 {
     public class Coin : MonoBehaviour
     {
@@ -39,7 +39,7 @@ namespace Game
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!other.CompareTag(ProjectSettingsHelper.GetTagName(TagType.Player))) return;
+            if (!other.CompareTag(ProjectConfig.GetTagName(TagType.Player))) return;
             
             GlobalValues.AddPlayerGold(_worth);
             Destroy(gameObject);

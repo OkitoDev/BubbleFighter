@@ -50,3 +50,11 @@ ________________________________________________________________________________
 04.05
 
 - Implemented spawning coins after enemy dies from a player hit
+
+______________________________________________________________________________________________________________________________
+05.05
+
+- Added a helper function that creates offsets for spawning points in circular manner
+- Adding guns with multiple spawn places for a projectile is now supported
+- Finding objects in scene now moved to Servies class and generalized
+- Project structure reorganized

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utilities;
 
 namespace Game.MovementPatterns
 {
@@ -7,7 +8,7 @@ namespace Game.MovementPatterns
 
         public void UpdatePosition()
         {
-            Vector3 mousePos = Mouse.GetMouseWorldPosition;
+            Vector3 mousePos = MouseUtils.GetMouseWorldPosition;
             var position = targetTransform.position;
             
             Vector3 direction = (mousePos - position).normalized;

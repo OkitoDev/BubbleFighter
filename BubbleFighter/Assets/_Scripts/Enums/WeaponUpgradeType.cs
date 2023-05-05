@@ -1,6 +1,6 @@
 namespace Enums
 {
-    public enum UpgradeType
+    public enum WeaponUpgradeType
     {
         BaseDamage,
         DamageMultiplier,

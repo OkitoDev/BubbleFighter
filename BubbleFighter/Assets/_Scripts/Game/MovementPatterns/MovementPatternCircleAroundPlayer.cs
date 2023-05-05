@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utilities;
 
 namespace Game.MovementPatterns
 {
@@ -11,7 +12,7 @@ namespace Game.MovementPatterns
 
         public MovementPatternCircleAroundPlayer(float radius, float rotateSpeed)
         {
-            _player = ObjectFinder.Player.transform;
+            _player = Services.GetServiceFromScene<Player.Player>().transform;
             _radius = radius;
             _rotateSpeed = rotateSpeed;
         }

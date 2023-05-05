@@ -2,9 +2,9 @@ using System;
 using Enums;
 using UnityEngine;
 
-namespace Helpers
+namespace Utilities
 {
-    public static class ProjectSettingsHelper
+    public static class ProjectConfig
     {
         public static string GetTagName(TagType tagType)
         {

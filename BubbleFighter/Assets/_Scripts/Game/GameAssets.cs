@@ -1,4 +1,5 @@
-using Game.Weapons.Projectiles;
+using Game.Collectibles;
+using Game.Projectiles;
 using UnityEngine;
 
 namespace Game

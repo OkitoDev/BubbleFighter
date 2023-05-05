@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Enums;
 using Game.MovementPatterns;
-using Game.Weapons.Projectiles;
+using Game.Projectiles;
 using UnityEngine;
+using Utilities;
 
 namespace Game.Weapons.Guns
 {
@@ -12,13 +13,14 @@ namespace Game.Weapons.Guns
         [SerializeField] private GunData gunData;
         private ProjectileSpawner _projectileSpawner;
         private Transform _baseFirePoint;
-        private readonly List<Upgrade> _upgrades = new List<Upgrade>();
-        
-        private float TotalBaseDamageFromUpgrades => _upgrades.Where(upgrade => upgrade.Type == UpgradeType.BaseDamage).ToList().Sum(upgrade => upgrade.Value);
-        private float TotalDamageMultiplierFromUpgrades => Mathf.Max(1f,_upgrades.Where(upgrade => upgrade.Type == UpgradeType.DamageMultiplier).ToList().Sum(upgrade => upgrade.Value));
-        private float TotalProjectileSizeFromUpgrades => Mathf.Max(1f, _upgrades.Where(upgrade => upgrade.Type == UpgradeType.ProjectileSize).ToList().Sum(upgrade => upgrade.Value));
-        private float TotalProjectileSpeedFromUpgrades => Mathf.Max(1f, _upgrades.Where(upgrade => upgrade.Type == UpgradeType.ProjectileSpeed).ToList().Sum(upgrade => upgrade.Value));
-        private float TotalCooldownReductionFromUpgrades => _upgrades.Where(upgrade => upgrade.Type == UpgradeType.CooldownReduction).Aggregate(1f, (current, upgrade) => current * ((100 - upgrade.Value) * 0.01f));
+        private readonly List<WeaponUpgrade> _upgrades = new List<WeaponUpgrade>();
+        private List<Vector3> _projectileSpawnPointsOffsets;
+
+        private float TotalBaseDamageFromUpgrades => _upgrades.Where(upgrade => upgrade.Type == WeaponUpgradeType.BaseDamage).ToList().Sum(upgrade => upgrade.Value);
+        private float TotalDamageMultiplierFromUpgrades => Mathf.Max(1f,_upgrades.Where(upgrade => upgrade.Type == WeaponUpgradeType.DamageMultiplier).ToList().Sum(upgrade => upgrade.Value));
+        private float TotalProjectileSizeFromUpgrades => Mathf.Max(1f, _upgrades.Where(upgrade => upgrade.Type == WeaponUpgradeType.ProjectileSize).ToList().Sum(upgrade => upgrade.Value));
+        private float TotalProjectileSpeedFromUpgrades => Mathf.Max(1f, _upgrades.Where(upgrade => upgrade.Type == WeaponUpgradeType.ProjectileSpeed).ToList().Sum(upgrade => upgrade.Value));
+        private float TotalCooldownReductionFromUpgrades => _upgrades.Where(upgrade => upgrade.Type == WeaponUpgradeType.CooldownReduction).Aggregate(1f, (current, upgrade) => current * ((100 - upgrade.Value) * 0.01f));
 
         // Stats
         private float _totalDamage;
@@ -33,13 +35,14 @@ namespace Game.Weapons.Guns
         private void Awake()
         {
             RecalculateAllStats();
-            _baseFirePoint = ObjectFinder.Player.FirePoint;
+            _baseFirePoint = Services.GetServiceFromScene<Player.Player>().FirePoint;
+            _projectileSpawnPointsOffsets = GetProjectileSpawnPointsOffsets();
         }
 
         public void EnableAutoFire()
         {
             _isAutoFireEnabled = true;
-            StartAutoFire();
+            RestartAutoFire();
         }
 
         public void ManualFire()
@@ -52,7 +55,10 @@ namespace Game.Weapons.Guns
 
         private void Fire()
         {
-            _projectileSpawner.SpawnProjectile(_baseFirePoint.position, Quaternion.identity, GetMovementPattern(), gunData.colliderTrigger);
+            foreach (var offset in _projectileSpawnPointsOffsets)
+            {
+                _projectileSpawner.SpawnProjectile(_baseFirePoint.position + offset, Quaternion.identity, GetMovementPattern(), gunData.colliderTrigger);
+            }
         }
         
         private void RecalculateDamage()
@@ -76,7 +82,7 @@ namespace Game.Weapons.Guns
         private void RecalculateCooldown()
         {
             _totalCooldown = Mathf.Max(gunData.cooldown * GlobalValues.GlobalPlayerCooldownReduction * TotalCooldownReductionFromUpgrades,0.001f);
-            StartAutoFire();
+            RestartAutoFire();
         }
 
         public void RecalculateAllStats()
@@ -88,13 +94,13 @@ namespace Game.Weapons.Guns
             UpdateProjectileFactory();
         }
 
-        public void AddUpgrade(Upgrade upgrade)
+        public void AddUpgrade(WeaponUpgrade weaponUpgrade)
         {
-            _upgrades.Add(upgrade);
+            _upgrades.Add(weaponUpgrade);
             RecalculateAllStats();
         }
 
-        private void StartAutoFire()
+        private void RestartAutoFire()
         {
             if (!_isAutoFireEnabled) return;
             
@@ -103,6 +109,14 @@ namespace Game.Weapons.Guns
         }
         
         protected abstract IMovementPattern GetMovementPattern();
+
+        protected virtual List<Vector3> GetProjectileSpawnPointsOffsets()
+        {
+            return new List<Vector3>()
+            {
+                new Vector3(0, 0)
+            };
+        }
 
         private void UpdateProjectileFactory()
         {

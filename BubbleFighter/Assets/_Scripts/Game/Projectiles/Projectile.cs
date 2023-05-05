@@ -1,11 +1,10 @@
-using System;
 using Enums;
 using Game.MovementPatterns;
-using Helpers;
 using Interfaces;
 using UnityEngine;
+using Utilities;
 
-namespace Game.Weapons.Projectiles
+namespace Game.Projectiles
 {
     public class Projectile : MonoBehaviour
     {
@@ -36,7 +35,7 @@ namespace Game.Weapons.Projectiles
                     enemy.TakeDamage(_damage);
                     Destroy(gameObject);
                     break;
-                case false when other.gameObject.CompareTag(ProjectSettingsHelper.GetTagName(TagType.Player)):
+                case false when other.gameObject.CompareTag(ProjectConfig.GetTagName(TagType.Player)):
                     GlobalValues.DamagePlayer(_damage);
                     Destroy(gameObject);
                     break;
@@ -51,7 +50,7 @@ namespace Game.Weapons.Projectiles
                     enemy.TakeDamage(_damage);
                     Destroy(gameObject);
                     break;
-                case false when other.gameObject.CompareTag(ProjectSettingsHelper.GetTagName(TagType.Player)):
+                case false when other.gameObject.CompareTag(ProjectConfig.GetTagName(TagType.Player)):
                     GlobalValues.DamagePlayer(_damage);
                     Destroy(gameObject);
                     break;
@@ -99,7 +98,7 @@ namespace Game.Weapons.Projectiles
 
         private void SetLayer(LayerType layerType)
         {
-            gameObject.layer = ProjectSettingsHelper.GetLayerId(layerType);
+            gameObject.layer = ProjectConfig.GetLayerId(layerType);
         }
 
         public Projectile SetColor(Color color)

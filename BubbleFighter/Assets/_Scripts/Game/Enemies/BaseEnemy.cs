@@ -1,9 +1,9 @@
 using System.Linq;
 using Enums;
 using Game.MovementPatterns;
-using Helpers;
 using Interfaces;
 using UnityEngine;
+using Utilities;
 
 namespace Game.Enemies
 {
@@ -50,7 +50,7 @@ namespace Game.Enemies
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if(other.gameObject.CompareTag(ProjectSettingsHelper.GetTagName(TagType.Player)) && IsCollisionWithPlayerOffCooldown)
+            if(other.gameObject.CompareTag(ProjectConfig.GetTagName(TagType.Player)) && IsCollisionWithPlayerOffCooldown)
             {
                 GlobalValues.DamagePlayer(_totalCollisionDamage);
                 _lastCollisionWithPlayer = Time.time;

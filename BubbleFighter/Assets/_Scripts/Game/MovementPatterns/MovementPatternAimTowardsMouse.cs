@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utilities;
 
 namespace Game.MovementPatterns
 {
@@ -8,7 +9,7 @@ namespace Game.MovementPatterns
         public override void SetValues(Transform transform, float speedMultiplier)
         {
             base.SetValues(transform, speedMultiplier);
-            _direction = (Vector2)(Mouse.GetMouseWorldPosition - targetTransform.position);
+            _direction = (Vector2)(MouseUtils.GetMouseWorldPosition - targetTransform.position);
             _direction = _direction.normalized;
         }
 

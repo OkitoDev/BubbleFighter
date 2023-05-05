@@ -1,8 +1,10 @@
+using Enums;
 using Game.Events;
+using Game.Weapons;
 using Game.Weapons.Guns;
 using UnityEngine;
 
-namespace Game
+namespace Game.Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]
@@ -62,6 +64,7 @@ namespace Game
                 GlobalValues.AddProjectileSpeed(500f);
                 statsChangeEvent.Raise();
                 FindObjectOfType<BubbleGun>().EnableAutoFire();
+                FindObjectOfType<BubbleGun>().AddUpgrade(new WeaponUpgrade(WeaponUpgradeType.BaseDamage, 1f));
             }
         }
 

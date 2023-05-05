@@ -52,7 +52,6 @@ namespace Game
         public static void AddPlayerGold(float goldToAdd)
         {
             PlayerGold += goldToAdd;
-            Debug.Log(PlayerGold);
         }
 
         public static void AddEnemyHealthMultiplier(float enemyHealthMultiplierToAdd)
@@ -103,7 +102,6 @@ namespace Game
         public static void DamagePlayer(float damageAmount)
         {
             PlayerHealth -= damageAmount;
-            Debug.Log(PlayerHealth);
         }
     }
 }
