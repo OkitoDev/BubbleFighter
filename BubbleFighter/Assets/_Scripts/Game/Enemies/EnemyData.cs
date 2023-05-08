@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Enums;
+using Game.Projectiles;
 using UnityEngine;
 
 namespace Game.Enemies
@@ -9,6 +10,7 @@ namespace Game.Enemies
     {
         public float worth;
         [Min(1f)] public float healthPoints = 1;
+        public ProjectileData projectileData;
         public float movementSpeed;
         public float attackCooldown;
         public float collisionCooldown = 0.5f;

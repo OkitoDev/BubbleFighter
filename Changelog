@@ -58,3 +58,10 @@ ________________________________________________________________________________
 - Adding guns with multiple spawn places for a projectile is now supported
 - Finding objects in scene now moved to Servies class and generalized
 - Project structure reorganized
+- Basic sound system implemented + some basic sounds imported
+- Some minor fixes
+
+______________________________________________________________________________________________________________________________
+08.05
+
+- Implemented shooting for monsters and added new movement pattern (aim towards player)

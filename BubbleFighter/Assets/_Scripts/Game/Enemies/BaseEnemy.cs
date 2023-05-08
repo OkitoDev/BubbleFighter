@@ -2,6 +2,7 @@ using System.Linq;
 using Enums;
 using Game.Audio;
 using Game.MovementPatterns;
+using Game.Projectiles;
 using Interfaces;
 using UnityEngine;
 using Utilities;
@@ -26,6 +27,7 @@ namespace Game.Enemies
         private float _lastCollisionWithPlayer;
         private IMovementPattern _movementPattern;
         private Rigidbody2D _rigidbody;
+        protected ProjectileSpawner _projectileSpawner;
 
         private bool IsCollisionWithPlayerOffCooldown => Time.time - _lastCollisionWithPlayer > enemyData.collisionCooldown;
 
@@ -41,6 +43,8 @@ namespace Game.Enemies
             _movementPattern = GetMovementPattern();
             _movementPattern.SetValues(transform, enemyData.movementSpeed);
             _rigidbody = GetComponent<Rigidbody2D>();
+            _projectileSpawner = new ProjectileSpawner(GameAssets.Instance.prefabDefaultProjectile,
+                enemyData.projectileData, _totalDamage,2f,5f);
             return this;
         }
 
@@ -108,7 +112,7 @@ namespace Game.Enemies
 
         protected virtual IMovementPattern GetProjectileMovementPattern()
         {
-            return new MovementPatternMoveTowardsPlayer();
+            return new MovementPatternAimTowardsPlayer();
         }
         
         protected abstract IMovementPattern GetMovementPattern();

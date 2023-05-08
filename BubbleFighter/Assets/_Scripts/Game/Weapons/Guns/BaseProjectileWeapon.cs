@@ -116,7 +116,7 @@ namespace Game.Weapons.Guns
         {
             return new List<Vector3>()
             {
-                new Vector3(0, 0)
+                new Vector3(transform.position.x ,transform.position.y, 0f)
             };
         }
 

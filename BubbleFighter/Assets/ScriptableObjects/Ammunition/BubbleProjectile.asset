@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BubbleProjectile
   m_EditorClassIdentifier: 
   size: 1
-  lifespan: 20
+  lifespan: 2
   sprite: {fileID: 21300000, guid: 33bbc2d725bb058479f94fc13e9cb38f, type: 3}

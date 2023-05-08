@@ -9,7 +9,8 @@ namespace Game.Weapons.Guns
     {
         protected override IMovementPattern GetMovementPattern()
         {
-            return new MovementPatternAwayFromPlayer();
+            return new MovementPatternAimTowardsMouse();
+            //return new MovementPatternAwayFromPlayer();
             //return new MovementPatternAimTowardsMouse();
             //return new MovementPatternSpiralFromInitialPosition();
             //return new MovementPatternCircleAroundPlayer(5f,100f);
@@ -30,7 +31,11 @@ namespace Game.Weapons.Guns
 
         protected override List<Vector3> GetProjectileSpawnPointsOffsets()
         {
-            return GeometryHelper.GenerateSpawnPointOffsetsOnACircle(8,0.5f,15);
+            //return GeometryHelper.GenerateSpawnPointOffsetsOnACircle(8,0.5f,15);
+            return new List<Vector3>()
+            {
+                new Vector3(transform.position.x ,transform.position.y, 0f)
+            };
         }
     }
 }

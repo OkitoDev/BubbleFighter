@@ -3,7 +3,7 @@ using Utilities;
 
 namespace Game.MovementPatterns
 {
-    public class MovementPatternMoveTowardsPlayer : MovementPatternSetter, IMovementPattern
+    public class MovementPatternFollowPlayer : MovementPatternSetter, IMovementPattern
     {
         private Transform _playerTransform;
         public override void SetValues(Transform transform, float speedMultiplier)

@@ -1,4 +1,5 @@
 using Game.MovementPatterns;
+using UnityEngine;
 
 namespace Game.Enemies.EnemyList
 {
@@ -6,12 +7,12 @@ namespace Game.Enemies.EnemyList
     {
         protected override IMovementPattern GetMovementPattern()
         {
-            return new MovementPatternMoveTowardsPlayer();
+            return new MovementPatternFollowPlayer();
         }
 
         protected override void Attack()
         {
-            //Debug.Log($"{enemyType} is attacking for {_totalDamage} damage!");
+            _projectileSpawner.SpawnProjectile(transform.position, Quaternion.identity, GetProjectileMovementPattern(), true);
         }
     }
 }
