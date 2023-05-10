@@ -1,22 +1,23 @@
 using Game.MovementPatterns;
 using UnityEngine;
-using Utilities;
 
 namespace Game.Projectiles
 {
     public class ProjectileSpawner
     {
-        private ProjectileData _projectileData;
-        private readonly Projectile _projectilePrefab;
-        private float _damage;
-        private float _sizeMultiplier;
-        private float _speedMultiplier;
+        private readonly BaseProjectile _projectilePrefab;
+        private readonly float _damage;
+        private readonly float _sizeMultiplier;
+        private readonly float _speedMultiplier;
         private readonly bool _wasCreatedByPlayer;
-        
+        private readonly Sprite _sprite;
+        private IMovementPattern _movementPattern;
+        private float _projectileLifespan = 5f;
+
         // TODO That's just a quick way to do it, redo this later
         private static Transform _projectilesParent;
 
-        public ProjectileSpawner(Projectile projectilePrefab, ProjectileData projectileData, float damage, float sizeMultiplier = 1f, float speedMultiplier = 1f, bool wasCreatedByPlayer = false)
+        public ProjectileSpawner(BaseProjectile projectilePrefab, float damage, IMovementPattern movementPattern, Sprite sprite, float sizeMultiplier = 1f, float speedMultiplier = 1f, bool wasCreatedByPlayer = false)
         {
             if (_projectilesParent == null)
             {
@@ -25,44 +26,37 @@ namespace Game.Projectiles
             
             _projectilePrefab = projectilePrefab;
             _wasCreatedByPlayer = wasCreatedByPlayer;
-            _projectileData = projectileData;
             _damage = damage;
             _sizeMultiplier = sizeMultiplier;
             _speedMultiplier = speedMultiplier;
+            _movementPattern = movementPattern;
+            _sprite = sprite;
         }
 
-        public void SpawnProjectile(Vector3 position, Quaternion rotation, IMovementPattern movementPattern, bool colliderTriggerValue, Color? color = null)
+        public void SpawnProjectile(Vector3 position, Quaternion rotation, bool colliderTrigger, Color? color = null)
         {
+            var newMovementPatternInstance = (IMovementPattern) _movementPattern.Clone();
             Color newColor = color ?? Color.white;
-            Object.Instantiate(_projectilePrefab, position, rotation, _projectilesParent)
-                .SetProjectileData(_projectileData)
-                .SetMovementPattern(movementPattern)
-                .SetDamage(_damage)
-                .SetColor(newColor)
-                .SetSizeMultiplier(_sizeMultiplier)
-                .SetSpeedMultiplier(_speedMultiplier)
-                .SetBulletCreatedByPlayer(_wasCreatedByPlayer)
-                .SetColliderTrigger(colliderTriggerValue);
+            var projectile = Object.Instantiate(_projectilePrefab, position, rotation, _projectilesParent);
+            projectile.SetMovementPattern(newMovementPatternInstance);
+            projectile.SetDamage(_damage);
+            projectile.SetColor(newColor);
+            projectile.SetSizeMultiplier(_sizeMultiplier);
+            projectile.SetSpeedMultiplier(_speedMultiplier);
+            projectile.SetBulletCreatedByPlayer(_wasCreatedByPlayer);
+            projectile.SetColliderTrigger(colliderTrigger);
+            projectile.SetLifespan(_projectileLifespan);
+            projectile.SetSprite(_sprite);
         }
 
-        public void UpdateProjectileData(ProjectileData projectileData)
+        public void UpdateMovementPattern(IMovementPattern movementPattern)
         {
-            _projectileData = projectileData;
+            _movementPattern = movementPattern;
         }
 
-        public void UpdateProjectileDamage(float damage)
+        public void UpdateProjectileLifespan(float lifespan)
         {
-            _damage = damage;
-        }
-
-        public void UpdateSpeedMultiplier(float speedMultiplier)
-        {
-            _speedMultiplier = speedMultiplier;
-        }
-        
-        public void UpdateSizeMultiplier(float sizeMultiplier)
-        {
-            _sizeMultiplier = sizeMultiplier;
+            _projectileLifespan = lifespan;
         }
     }
 }

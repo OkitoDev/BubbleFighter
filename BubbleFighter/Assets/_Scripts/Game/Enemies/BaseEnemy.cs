@@ -16,6 +16,7 @@ namespace Game.Enemies
         public Transform Transform => transform;
 
         [SerializeField] private EnemyData enemyData;
+        [SerializeField] private Sprite projectileSprite;
         private EnemyType _enemyType;
         private float _totalWorth;
         private float _totalHealthPoints;
@@ -43,8 +44,7 @@ namespace Game.Enemies
             _movementPattern = GetMovementPattern();
             _movementPattern.SetValues(transform, enemyData.movementSpeed);
             _rigidbody = GetComponent<Rigidbody2D>();
-            _projectileSpawner = new ProjectileSpawner(GameAssets.Instance.prefabDefaultProjectile,
-                enemyData.projectileData, _totalDamage,2f,5f);
+            _projectileSpawner = new ProjectileSpawner(GameAssets.Instance.prefabBasicProjectile, _totalDamage,_movementPattern,projectileSprite,1f,20f);
             return this;
         }
 
@@ -112,7 +112,7 @@ namespace Game.Enemies
 
         protected virtual IMovementPattern GetProjectileMovementPattern()
         {
-            return new MovementPatternAimTowardsPlayer();
+            return new AimTowardsPlayer();
         }
         
         protected abstract IMovementPattern GetMovementPattern();

@@ -7,12 +7,12 @@ namespace Game.Enemies.EnemyList
     {
         protected override IMovementPattern GetMovementPattern()
         {
-            return new MovementPatternFollowPlayer();
+            return new AimTowardsPlayer();
         }
 
         protected override void Attack()
         {
-            _projectileSpawner.SpawnProjectile(transform.position, Quaternion.identity, GetProjectileMovementPattern(), true);
+            _projectileSpawner.SpawnProjectile(transform.position, Quaternion.identity, false);
         }
     }
 }

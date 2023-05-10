@@ -1,12 +1,13 @@
+using System;
 using UnityEngine;
 using Utilities;
 
 namespace Game.MovementPatterns
 {
-    public class MovementPatternFollowMouse : MovementPatternSetter, IMovementPattern
+    [Serializable]
+    public class FollowMouse : BaseMovementPattern
     {
-
-        public void UpdatePosition()
+        public override void UpdatePosition()
         {
             Vector3 mousePos = MouseUtils.GetMouseWorldPosition;
             var position = targetTransform.position;
@@ -14,6 +15,11 @@ namespace Game.MovementPatterns
             Vector3 direction = (mousePos - position).normalized;
 
             targetTransform.Translate(direction * targetSpeedMultiplier * Time.deltaTime);
+        }
+
+        public override object Clone()
+        {
+            return new FollowMouse();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Enums;
 using Game.MovementPatterns;
 using Interfaces;
@@ -6,25 +7,26 @@ using Utilities;
 
 namespace Game.Projectiles
 {
-    public class Projectile : MonoBehaviour
+    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Collider2D))]
+    public abstract class BaseProjectile : MonoBehaviour
     {
+        private float _lifespan;
         private IMovementPattern _movementPattern;
-        private ProjectileData _projectileData;
         private SpriteRenderer _spriteRenderer;
         private float _speedMultiplier = 1f;
         private float _sizeMultiplier = 1f;
         private bool _wasCreatedByPlayer;
         private float _damage;
 
-        private void Start()
+        private void Awake()
         {
-            Invoke(nameof(SelfDestruction),_projectileData.lifespan);
-            _movementPattern.SetValues(transform, _speedMultiplier);
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         private void Update()
         {
-            _movementPattern.UpdatePosition();
+            _movementPattern?.UpdatePosition();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -57,43 +59,33 @@ namespace Game.Projectiles
             }
         }
 
-        public Projectile SetProjectileData(ProjectileData projectileData)
-        {
-            _projectileData = projectileData;
-            RefreshVisuals();
-            return this;
-        }
-
-        public Projectile SetMovementPattern(IMovementPattern movementPattern)
+        public void SetMovementPattern(IMovementPattern movementPattern)
         {
             _movementPattern = movementPattern;
-            return this;
+            _movementPattern.SetValues(transform, _speedMultiplier);
         }
 
-        public Projectile SetSpeedMultiplier(float speedMultiplier)
+        public void SetSpeedMultiplier(float speedMultiplier)
         {
             _speedMultiplier = speedMultiplier;
-            return this;
+            _movementPattern.SetValues(transform, _speedMultiplier);
         }
         
-        public Projectile SetSizeMultiplier(float sizeMultiplier)
+        public void SetSizeMultiplier(float sizeMultiplier)
         {
             _sizeMultiplier = sizeMultiplier;
-            transform.localScale *= _projectileData.size * _sizeMultiplier;
-            return this;
+            transform.localScale *= _sizeMultiplier;
         }
 
-        public Projectile SetDamage(float damage)
+        public void SetDamage(float damage)
         {
             _damage = damage;
-            return this;
         }
 
-        public Projectile SetBulletCreatedByPlayer(bool wasCreatedByPlayer)
+        public void SetBulletCreatedByPlayer(bool wasCreatedByPlayer)
         {
             _wasCreatedByPlayer = wasCreatedByPlayer;
             SetLayer(_wasCreatedByPlayer ? LayerType.ProjectileSpawnedByPlayer : LayerType.ProjectileSpawnedByEnemy);
-            return this;
         }
 
         private void SetLayer(LayerType layerType)
@@ -101,10 +93,14 @@ namespace Game.Projectiles
             gameObject.layer = ProjectConfig.GetLayerId(layerType);
         }
 
-        public Projectile SetColor(Color color)
+        public void SetColor(Color color)
         {
             _spriteRenderer.color = color;
-            return this;
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            _spriteRenderer.sprite = sprite;
         }
 
         public void SetColliderTrigger(bool triggerValue)
@@ -112,11 +108,10 @@ namespace Game.Projectiles
             GetComponent<Collider2D>().isTrigger = triggerValue;
         }
 
-        private void RefreshVisuals()
+        public void SetLifespan(float lifespan)
         {
-            // Awake doesn't get called before this, idc
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            _spriteRenderer.sprite = _projectileData.sprite;
+            _lifespan = lifespan;
+            Invoke(nameof(SelfDestruction), _lifespan);
         }
 
         private void SelfDestruction()

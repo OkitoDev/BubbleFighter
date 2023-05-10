@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 using Utilities;
 
 namespace Game.MovementPatterns
 {
-    public class MovementPatternAimTowardsMouse : MovementPatternSetter, IMovementPattern
+    [Serializable]
+    public class AimTowardsMouse : BaseMovementPattern
     {
         private Vector3 _direction;
+        
         public override void SetValues(Transform transform, float speedMultiplier)
         {
             base.SetValues(transform, speedMultiplier);
@@ -13,9 +16,14 @@ namespace Game.MovementPatterns
             _direction = _direction.normalized;
         }
 
-        public void UpdatePosition()
+        public override void UpdatePosition()
         { 
             targetTransform.position += _direction * targetSpeedMultiplier * Time.deltaTime;
+        }
+
+        public override object Clone()
+        {
+            return new AimTowardsMouse();
         }
     }
 }

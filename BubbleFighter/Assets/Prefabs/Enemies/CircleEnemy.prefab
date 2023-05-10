@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 912e500329f6bef4a955ba4b2b96c4d8, type: 2}
+  projectileSprite: {fileID: 21300000, guid: 33bbc2d725bb058479f94fc13e9cb38f, type: 3}
 --- !u!50 &8433584111008423624
 Rigidbody2D:
   serializedVersion: 4

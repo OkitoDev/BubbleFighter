@@ -1,11 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Game.MovementPatterns
 {
-    /// <summary>
-    /// That's a bit hacky but Idc
-    /// </summary>
-    public abstract class MovementPatternSetter
+    public abstract class BaseMovementPattern : IMovementPattern
     {
         protected Transform targetTransform;
         protected float targetSpeedMultiplier;
@@ -15,5 +13,9 @@ namespace Game.MovementPatterns
             targetTransform = transform;
             targetSpeedMultiplier = speedMultiplier;
         }
+
+        public abstract void UpdatePosition();
+
+        public abstract object Clone();
     }
 }

@@ -14,20 +14,21 @@ namespace Utilities
         /// <param name="radius">Radius of the circle</param>
         /// <param name="initialRotation">Initial rotation of the first point</param>
         /// <returns></returns>
-    public static List<Vector3> GenerateSpawnPointOffsetsOnACircle(int spawnPointCount, float radius, float initialRotation = 0)
-    {
-        var offsets = new List<Vector3>();
-        float angleIncrement = 2 * Mathf.PI / spawnPointCount;
-
-        for (var i = 0; i < spawnPointCount; i++)
+        public static List<Vector3> GenerateSpawnPointOffsetsOnACircle(int spawnPointCount, float radius, float initialRotation = 0) 
         {
-            float angle = i * angleIncrement + initialRotation * Mathf.Deg2Rad + Mathf.PI / 2;
-            float x = radius * Mathf.Cos(angle);
-            float y = radius * Mathf.Sin(angle);
-            offsets.Add(new Vector2(x, y));
-        }
+            var offsets = new List<Vector3>();
+            float angleIncrement = 2 * Mathf.PI / spawnPointCount;
 
-        return offsets;
-    }
+            for (var i = 0; i < spawnPointCount; i++)
+            {
+                float angle = i * angleIncrement + initialRotation * Mathf.Deg2Rad + Mathf.PI / 2;
+                float x = radius * Mathf.Cos(angle);
+                float y = radius * Mathf.Sin(angle);
+                offsets.Add(new Vector2(x, y));
+            }
+            
+            return offsets;
+        }
+        
     }
 }

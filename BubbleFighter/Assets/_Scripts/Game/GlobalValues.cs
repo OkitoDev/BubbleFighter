@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Game
@@ -7,6 +9,7 @@ namespace Game
         // TODO that's only temporary
         // Damage works in percentages
         // (e.g. damage multiplier +100% buff would bring it from 1 => 2)
+        public static event Action OnGlobalPlayerWeaponStatsChanged;
         public static float PlayerGold { get; private set; } = 1f;
         public static float PlayerHealth{ get; private set; } = 100f;
         public static float PlayerMaxHealth{ get; private set; } = 100f;
@@ -27,26 +30,31 @@ namespace Game
         public static void AddDamage(float damageToAdd)
         {
             GlobalPlayerDamage += damageToAdd;
+            OnGlobalPlayerWeaponStatsChanged?.Invoke();
         }
 
         public static void AddDamageMultiplier(float damageMultiplierToAdd)
         {
             GlobalPlayerDamageMultiplier += damageMultiplierToAdd / 100f;
+            OnGlobalPlayerWeaponStatsChanged?.Invoke();
         }
         
         public static void DecreaseCooldown(float cooldownDecrease)
         {
             GlobalPlayerCooldownReduction = ((100f - cooldownDecrease) / 100f) * GlobalPlayerCooldownReduction;
+            OnGlobalPlayerWeaponStatsChanged?.Invoke();
         }
         
         public static void AddProjectileSize(float projectileSizeToAdd)
         {
             GlobalProjectileSize += projectileSizeToAdd / 100f;
+            OnGlobalPlayerWeaponStatsChanged?.Invoke();
         }
 
         public static void AddProjectileSpeed(float projectileSpeedToAdd)
         {
             GlobalProjectileSpeed += projectileSpeedToAdd / 100f;
+            OnGlobalPlayerWeaponStatsChanged?.Invoke();
         }
 
         public static void AddPlayerGold(float goldToAdd)

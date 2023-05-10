@@ -4,6 +4,7 @@ using Game.Collectibles;
 using Game.Projectiles;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 namespace Game
 {
@@ -40,7 +41,7 @@ namespace Game
             }
         }
         
-        public Projectile prefabDefaultProjectile;
+        public BasicProjectile prefabBasicProjectile;
         public Coin prefabCoin;
         
         public List<SoundAudioClip> soundAudioClipList;
