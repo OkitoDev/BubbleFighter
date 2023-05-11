@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enums;
 using Game.Audio;
 using Game.MovementPatterns;
 using Game.Projectiles;
 using Game.StatsCalculators;
+using Game.Weapons.ScriptableObjects;
 using Game.Weapons.SpawnPoints;
 using UnityEngine;
 
@@ -11,10 +14,10 @@ namespace Game.Weapons.Guns
 {
     public class ProjectileWeapon
     {
+        private readonly List<WeaponUpgrade> _upgrades = new List<WeaponUpgrade>();
         private readonly MonoBehaviour _weaponHolder;
         private readonly Transform _baseFirePoint;
-        private readonly List<WeaponUpgrade> _upgrades = new List<WeaponUpgrade>();
-        private readonly Sprite _projectileSprite;
+        private Sprite _projectileSprite;
         private IProjectileSpawnPointProvider _projectileSpawnPointProvider;
         private IWeaponStatsCalculator _weaponStatsCalculator;
         private IMovementPattern _projectileMovementPattern;
@@ -84,23 +87,30 @@ namespace Game.Weapons.Guns
         }
         public BaseProjectile ProjectilePrefab { private get; set; }
 
-
-        public ProjectileWeapon(MonoBehaviour weaponHolder, WeaponStats weaponStats, Sprite projectileSprite)
+        public ProjectileWeapon(MonoBehaviour weaponHolder, ProjectileWeaponData weaponData)
         {
-            _weaponBaseStats = weaponStats;
             _weaponHolder = weaponHolder;
-            _baseFirePoint = weaponHolder.transform;
-            _projectileSprite = projectileSprite;
+            _baseFirePoint = weaponHolder.transform; ;
+            GlobalValues.OnGlobalPlayerWeaponStatsChanged += RecalculateAllStats;
+            Initialize(weaponData);
             
-            // Set default stuff, those can be changed as needed from setters
-            ProjectilePrefab = GameAssets.Instance.prefabBasicProjectile;
+#if UNITY_EDITOR
+            weaponData.OnScriptableObjectChange += Initialize;
+#endif
+        }
+
+        private void Initialize(ProjectileWeaponData weaponData)
+        {
+            _projectileSprite = weaponData.projectileSprite;
+
             var defaultProjectilesMovementPattern = new AimTowardsDirection();
             defaultProjectilesMovementPattern.Initialize(Vector3.right);
-            ProjectilesMovementPattern = defaultProjectilesMovementPattern;
-            ProjectileSpawnPointProvider = new SinglePointInCenter();
-            WeaponStatsCalculator = new BasicPlayerWeaponStatsCalculator();
 
-            GlobalValues.OnGlobalPlayerWeaponStatsChanged += RecalculateAllStats;
+            WeaponBaseStats = weaponData.weaponBaseStats;
+            ProjectilePrefab = weaponData.projectilePrefab == null ? GameAssets.Instance.prefabBasicProjectile : weaponData.projectilePrefab;
+            ProjectilesMovementPattern = weaponData.projectileMovementPattern ?? defaultProjectilesMovementPattern;
+            ProjectileSpawnPointProvider = weaponData.projectileSpawnPointProvider ?? new SinglePointInCenter();
+            WeaponStatsCalculator = weaponData.weaponStatsCalculator ?? new BasicPlayerWeaponStatsCalculator();
         }
 
         public void ManualFire()
@@ -131,6 +141,7 @@ namespace Game.Weapons.Guns
 
         private void RecalculateAllStats()
         {
+            if (WeaponStatsCalculator == null) return;
             _totalDamage = WeaponStatsCalculator.GetTotalDamage(WeaponBaseStats, _upgrades);
             _totalProjectileSize = WeaponStatsCalculator.GetTotalProjectileSize(WeaponBaseStats, _upgrades);
             _totalProjectileSpeed = WeaponStatsCalculator.GetTotalProjectileSpeed(WeaponBaseStats, _upgrades);
@@ -144,6 +155,7 @@ namespace Game.Weapons.Guns
             _upgrades.Add(weaponUpgrade);
             RecalculateAllStats();
         }
+
 
         private void RestartAutoFire(bool isEnabled)
         {

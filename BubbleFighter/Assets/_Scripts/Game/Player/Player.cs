@@ -1,6 +1,8 @@
+using System;
 using Game.Events;
 using Game.MovementPatterns;
 using Game.Weapons.Guns;
+using Game.Weapons.ScriptableObjects;
 using Game.Weapons.SpawnPoints;
 using UnityEngine;
 
@@ -21,7 +23,8 @@ namespace Game.Player
         [SerializeReference, SubclassSelector] private IMovementPattern _pattern;
         private IProjectileSpawnPointProvider _lastProvider;
         private IMovementPattern _lastPattern;
-        
+        [SerializeField] private ProjectileWeaponData projectileWeaponData;
+
         public Transform FirePoint => firePoint;
 
 
@@ -34,13 +37,14 @@ namespace Game.Player
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _projectileWeapon = new ProjectileWeapon(this, _weaponStats, _projectileSprite);
+            //_projectileWeapon = new ProjectileWeapon(this, _weaponStats, _projectileSprite);
+            _projectileWeapon = new ProjectileWeapon(this, projectileWeaponData);
         }
 
         private void Update()
         {
-            if (_lastProvider != _provider) _projectileWeapon.ProjectileSpawnPointProvider = _provider;
-            if (_lastPattern != _pattern) _projectileWeapon.ProjectilesMovementPattern = _pattern;
+            //if (_lastProvider != _provider) _projectileWeapon.ProjectileSpawnPointProvider = _provider;
+            //if (_lastPattern != _pattern) _projectileWeapon.ProjectilesMovementPattern = _pattern;
             
             float moveX = Input.GetAxisRaw("Horizontal");
             float moveY = Input.GetAxisRaw("Vertical");
@@ -74,9 +78,9 @@ namespace Game.Player
                 GlobalValues.AddDamageMultiplier(100f);
                 GlobalValues.AddProjectileSize(5f);
                 _projectileWeapon.AutoFire = true;
-                var spawnPointProvider = new CircularSpawnPointProvider();
-                spawnPointProvider.SetValues(8,0,2);
-                _projectileWeapon.ProjectileSpawnPointProvider = spawnPointProvider;
+                //var spawnPointProvider = new CircularSpawnPointProvider();
+                //spawnPointProvider.SetValues(8,0,2);
+                //_projectileWeapon.ProjectileSpawnPointProvider = spawnPointProvider;
                 //statsChangeEvent.Raise();
                 //FindObjectOfType<BubbleGun>().EnableAutoFire();
                 //FindObjectOfType<BubbleGun>().AddUpgrade(new WeaponUpgrade(WeaponUpgradeType.BaseDamage, 1f));
