@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef5b7bc62d145c3ac3a64ad93eb4886, type: 3}
+  m_Name: Weapon2
+  m_EditorClassIdentifier: 
+  projectileMovementPattern:
+    id: 0
+  projectileSpawnPointProvider:
+    id: 1
+  weaponStatsCalculator:
+    id: 2
+  projectilePrefab: {fileID: 0}
+  weaponBaseStats: {fileID: 0}
+  projectileSprite: {fileID: 0}
+  baseDamageUpgradeTree: {fileID: 0}
+  damageMultiplierUpgradeTree: {fileID: 0}
+  projectileMovementUpgradeTree: {fileID: 0}
+  projectileSpawnPointsUpgradeTree: {fileID: 0}
+  references:
+    version: 1
+    00000000:
+      type: {class: CircleAroundPoint, ns: Game.MovementPatterns, asm: Assembly-CSharp}
+      data:
+        offset: {x: 2, y: 2, z: 0}
+        radius: 1
+        rotationSpeed: 2
+    00000001:
+      type: {class: CircularSpawnPointProvider, ns: Game.Weapons.SpawnPoints, asm: Assembly-CSharp}
+      data:
+        spawnPointCount: 8
+        initialRotation: 53
+        radius: 1.89
+    00000002:
+      type: {class: , ns: , asm: }

@@ -5,9 +5,9 @@ namespace Game.Weapons
     public class WeaponUpgrade
     {
         public readonly WeaponUpgradeType Type;
-        public readonly float Value;
+        public readonly object Value;
 
-        public WeaponUpgrade(WeaponUpgradeType type, float value)
+        public WeaponUpgrade(WeaponUpgradeType type, object value)
         {
             Type = type;
             Value = value;

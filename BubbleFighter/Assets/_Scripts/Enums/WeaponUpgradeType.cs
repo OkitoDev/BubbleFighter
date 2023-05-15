@@ -6,6 +6,8 @@ namespace Enums
         DamageMultiplier,
         ProjectileSize,
         ProjectileSpeed,
-        CooldownReduction
+        CooldownReduction,
+        ProjectileFiringPattern,
+        ProjectileSpawnPoint
     }
 }

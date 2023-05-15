@@ -2,6 +2,7 @@ using System;
 using Game.MovementPatterns;
 using Game.Projectiles;
 using Game.StatsCalculators;
+using Game.Upgrades.UpgradeTrees;
 using Game.Weapons.Guns;
 using Game.Weapons.SpawnPoints;
 using UnityEngine;
@@ -22,7 +23,21 @@ namespace Game.Weapons.ScriptableObjects
         public WeaponStats weaponBaseStats;
         public Sprite projectileSprite;
         
-        public void OnValidate() {
+        [Header("Possible upgrades")]
+        public BaseDamageUpgradeTree baseDamageUpgradeTree;
+        public DamageMultiplierUpgradeTree damageMultiplierUpgradeTree;
+        public ProjectileMovementUpgradeTree projectileMovementUpgradeTree;
+        public ProjectileSpawnPointsUpgradeTree projectileSpawnPointsUpgradeTree;
+
+        public ProjectileWeaponData(IMovementPattern projectileMovementPattern, IProjectileSpawnPointProvider projectileSpawnPointProvider, IWeaponStatsCalculator weaponStatsCalculator)
+        {
+            this.projectileMovementPattern = projectileMovementPattern;
+            this.projectileSpawnPointProvider = projectileSpawnPointProvider;
+            this.weaponStatsCalculator = weaponStatsCalculator;
+        }
+
+        public void OnValidate() 
+        {
             OnScriptableObjectChange?.Invoke(this);
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using Enums;
 using Game.Events;
 using Game.MovementPatterns;
 using Game.Weapons.Guns;
@@ -16,13 +17,6 @@ namespace Game.Player
         [SerializeField] [Range(1,10)] private float moveSpeed;
         [SerializeField] private Transform firePoint;
         [SerializeField] private GameEvent fireEvent;
-        [SerializeField] private GameEvent statsChangeEvent;
-        [SerializeField] private WeaponStats _weaponStats;
-        [SerializeField] private Sprite _projectileSprite;
-        [SerializeReference, SubclassSelector] private IProjectileSpawnPointProvider _provider;
-        [SerializeReference, SubclassSelector] private IMovementPattern _pattern;
-        private IProjectileSpawnPointProvider _lastProvider;
-        private IMovementPattern _lastPattern;
         [SerializeField] private ProjectileWeaponData projectileWeaponData;
 
         public Transform FirePoint => firePoint;
@@ -33,25 +27,22 @@ namespace Game.Player
         private Rigidbody2D _rigidbody;
         private ProjectileWeapon _projectileWeapon;
 
+        private int currentMovementPatternUpgrade = 0;
+        private int currentProjectileSpawnUpgrade = 0;
+
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            //_projectileWeapon = new ProjectileWeapon(this, _weaponStats, _projectileSprite);
             _projectileWeapon = new ProjectileWeapon(this, projectileWeaponData);
         }
 
         private void Update()
         {
-            //if (_lastProvider != _provider) _projectileWeapon.ProjectileSpawnPointProvider = _provider;
-            //if (_lastPattern != _pattern) _projectileWeapon.ProjectilesMovementPattern = _pattern;
-            
             float moveX = Input.GetAxisRaw("Horizontal");
             float moveY = Input.GetAxisRaw("Vertical");
 
             _moveDirection = new Vector2(moveX, moveY).normalized;
-            //_mousePosition = Mouse.GetMouseWorldPosition;
-            //_mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             if (Input.GetButtonDown("Fire1"))
             {
@@ -66,9 +57,7 @@ namespace Game.Player
                 GlobalValues.AddDamageMultiplier(1f);
                 GlobalValues.AddProjectileSize(10f);
                 GlobalValues.AddProjectileSpeed(5000f);
-                //statsChangeEvent.Raise();
                 GlobalValues.AddEnemyHealthMultiplier(10000f);
-                //FindObjectOfType<BubbleGun>().EnableAutoFire();
             }
             
             if (Input.GetKeyDown(KeyCode.R))
@@ -78,12 +67,6 @@ namespace Game.Player
                 GlobalValues.AddDamageMultiplier(100f);
                 GlobalValues.AddProjectileSize(5f);
                 _projectileWeapon.AutoFire = true;
-                //var spawnPointProvider = new CircularSpawnPointProvider();
-                //spawnPointProvider.SetValues(8,0,2);
-                //_projectileWeapon.ProjectileSpawnPointProvider = spawnPointProvider;
-                //statsChangeEvent.Raise();
-                //FindObjectOfType<BubbleGun>().EnableAutoFire();
-                //FindObjectOfType<BubbleGun>().AddUpgrade(new WeaponUpgrade(WeaponUpgradeType.BaseDamage, 1f));
             }
 
             if (Input.GetKeyDown(KeyCode.P))
@@ -94,6 +77,18 @@ namespace Game.Player
             if (Input.GetKeyDown(KeyCode.M))
             {
                 GlobalValues.AddProjectileSpeed(-50f);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                _projectileWeapon.Upgrade(WeaponUpgradeType.ProjectileFiringPattern, projectileWeaponData.projectileMovementUpgradeTree.projectileMovementUpgrades.upgrades[currentMovementPatternUpgrade].value);
+                currentMovementPatternUpgrade++;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                _projectileWeapon.Upgrade(WeaponUpgradeType.ProjectileSpawnPoint, projectileWeaponData.projectileSpawnPointsUpgradeTree.projectileSpawnPointUpgrades.upgrades[currentProjectileSpawnUpgrade].value);
+                currentProjectileSpawnUpgrade++;
             }
         }
 

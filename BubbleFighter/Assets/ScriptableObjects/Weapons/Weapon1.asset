@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aef5b7bc62d145c3ac3a64ad93eb4886, type: 3}
-  m_Name: Test
+  m_Name: Weapon1
   m_EditorClassIdentifier: 
   projectileMovementPattern:
     id: 0
@@ -18,23 +18,22 @@ MonoBehaviour:
     id: 1
   weaponStatsCalculator:
     id: 2
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 7274304398087188608, guid: b10013861cf7e9c44bf6cc3dd5c4152c, type: 3}
   weaponBaseStats: {fileID: 11400000, guid: d3d8aa7a988a503478a7ae7e7516fd37, type: 2}
   projectileSprite: {fileID: 21300000, guid: 33bbc2d725bb058479f94fc13e9cb38f, type: 3}
+  baseDamageUpgradeTree: {fileID: 11400000, guid: ac7e258f9013fb54bb98e8f270c4d6db, type: 2}
+  damageMultiplierUpgradeTree: {fileID: 11400000, guid: 0bef59fb3a71d8d4d807854ea709771c, type: 2}
+  projectileMovementUpgradeTree: {fileID: 11400000, guid: 49db881aa02d76e4b9339d5ad7e4b536, type: 2}
+  projectileSpawnPointsUpgradeTree: {fileID: 11400000, guid: d910f5584e2068743aa65889aad74e54, type: 2}
   references:
     version: 1
     00000000:
-      type: {class: CircleAroundPlayer, ns: Game.MovementPatterns, asm: Assembly-CSharp}
-      data:
-        rotationSpeed: 50
-        radius: 2
-        player: {fileID: 0}
-        offset: {x: 0, y: 0, z: 0}
+      type: {class: AimAwayFromPlayer, ns: Game.MovementPatterns, asm: Assembly-CSharp}
     00000001:
       type: {class: CircularSpawnPointProvider, ns: Game.Weapons.SpawnPoints, asm: Assembly-CSharp}
       data:
-        spawnPointCount: 7
+        spawnPointCount: 1
         initialRotation: 0
         radius: 1
     00000002:
-      type: {class: , ns: , asm: }
+      type: {class: BasicPlayerWeaponStatsCalculator, ns: Game.StatsCalculators, asm: Assembly-CSharp}

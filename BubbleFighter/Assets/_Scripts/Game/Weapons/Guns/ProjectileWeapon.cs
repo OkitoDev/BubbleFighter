@@ -156,6 +156,29 @@ namespace Game.Weapons.Guns
             RecalculateAllStats();
         }
 
+        public void Upgrade(WeaponUpgradeType weaponUpgradeType, object upgradeValue)
+        {
+            switch (weaponUpgradeType)
+            {
+                case WeaponUpgradeType.BaseDamage:
+                case WeaponUpgradeType.DamageMultiplier:
+                case WeaponUpgradeType.ProjectileSize:
+                case WeaponUpgradeType.ProjectileSpeed:
+                case WeaponUpgradeType.CooldownReduction:
+                    _upgrades.Add(new WeaponUpgrade(weaponUpgradeType, upgradeValue));
+                    break;
+                case WeaponUpgradeType.ProjectileFiringPattern:
+                    ProjectilesMovementPattern = (IMovementPattern) upgradeValue;
+                    break;
+                case WeaponUpgradeType.ProjectileSpawnPoint:
+                    ProjectileSpawnPointProvider = (IProjectileSpawnPointProvider) upgradeValue;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(weaponUpgradeType), weaponUpgradeType, null);
+            }
+            
+            RecalculateAllStats();
+        }
 
         private void RestartAutoFire(bool isEnabled)
         {
