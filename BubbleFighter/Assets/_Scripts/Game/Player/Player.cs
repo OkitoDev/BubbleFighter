@@ -1,10 +1,7 @@
-using System;
 using Enums;
 using Game.Events;
-using Game.MovementPatterns;
 using Game.Weapons.Guns;
 using Game.Weapons.ScriptableObjects;
-using Game.Weapons.SpawnPoints;
 using UnityEngine;
 
 namespace Game.Player
@@ -39,6 +36,7 @@ namespace Game.Player
 
         private void Update()
         {
+            if (GameManager.Instance.IsGamePaused) return;
             float moveX = Input.GetAxisRaw("Horizontal");
             float moveY = Input.GetAxisRaw("Vertical");
 
@@ -81,7 +79,8 @@ namespace Game.Player
             
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                _projectileWeapon.Upgrade(WeaponUpgradeType.ProjectileFiringPattern, projectileWeaponData.projectileMovementUpgradeTree.projectileMovementUpgrades.upgrades[currentMovementPatternUpgrade].value);
+                _projectileWeapon.Upgrade(WeaponUpgradeType.ProjectileFiringPattern, 
+                    projectileWeaponData.projectileMovementUpgradeTree.projectileMovementUpgrades.upgrades[currentMovementPatternUpgrade].value);
                 currentMovementPatternUpgrade++;
             }
             

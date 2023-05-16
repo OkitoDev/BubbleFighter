@@ -19,7 +19,7 @@ namespace Game.Weapons.Guns
         private readonly Transform _baseFirePoint;
         private Sprite _projectileSprite;
         private IProjectileSpawnPointProvider _projectileSpawnPointProvider;
-        private IWeaponStatsCalculator _weaponStatsCalculator;
+        private IProjectileWeaponStatsCalculator _projectileWeaponStatsCalculator;
         private IMovementPattern _projectileMovementPattern;
         private WeaponStats _weaponBaseStats;
         private List<Vector3> _projectileSpawnPointsOffsets;
@@ -66,12 +66,12 @@ namespace Game.Weapons.Guns
             }
         }
         
-        public IWeaponStatsCalculator WeaponStatsCalculator
+        public IProjectileWeaponStatsCalculator ProjectileWeaponStatsCalculator
         {
-            private get => _weaponStatsCalculator;
+            private get => _projectileWeaponStatsCalculator;
             set
             {
-                _weaponStatsCalculator = value;
+                _projectileWeaponStatsCalculator = value;
                 RecalculateAllStats();
             }
         }
@@ -85,7 +85,8 @@ namespace Game.Weapons.Guns
                 RecalculateAllStats();
             }
         }
-        public BaseProjectile ProjectilePrefab { private get; set; }
+
+        private BaseProjectile ProjectilePrefab { get; set; }
 
         public ProjectileWeapon(MonoBehaviour weaponHolder, ProjectileWeaponData weaponData)
         {
@@ -110,7 +111,7 @@ namespace Game.Weapons.Guns
             ProjectilePrefab = weaponData.projectilePrefab == null ? GameAssets.Instance.prefabBasicProjectile : weaponData.projectilePrefab;
             ProjectilesMovementPattern = weaponData.projectileMovementPattern ?? defaultProjectilesMovementPattern;
             ProjectileSpawnPointProvider = weaponData.projectileSpawnPointProvider ?? new SinglePointInCenter();
-            WeaponStatsCalculator = weaponData.weaponStatsCalculator ?? new BasicPlayerWeaponStatsCalculator();
+            ProjectileWeaponStatsCalculator = weaponData.projectileWeaponStatsCalculator ?? new BasicPlayerProjectileWeaponStatsCalculator();
         }
 
         public void ManualFire()
@@ -132,28 +133,22 @@ namespace Game.Weapons.Guns
         
         private IEnumerator FireCoroutine()
         {
-            while (AutoFire)
+            while (true)
             {
-                Fire();
+                if(AutoFire) Fire();
                 yield return new WaitForSeconds(_totalCooldown);
             }
         }
 
         private void RecalculateAllStats()
         {
-            if (WeaponStatsCalculator == null) return;
-            _totalDamage = WeaponStatsCalculator.GetTotalDamage(WeaponBaseStats, _upgrades);
-            _totalProjectileSize = WeaponStatsCalculator.GetTotalProjectileSize(WeaponBaseStats, _upgrades);
-            _totalProjectileSpeed = WeaponStatsCalculator.GetTotalProjectileSpeed(WeaponBaseStats, _upgrades);
-            _totalCooldown = WeaponStatsCalculator.GetTotalCooldown(WeaponBaseStats, _upgrades);
+            if (ProjectileWeaponStatsCalculator == null) return;
+            _totalDamage = ProjectileWeaponStatsCalculator.GetTotalDamage(WeaponBaseStats, _upgrades);
+            _totalProjectileSize = ProjectileWeaponStatsCalculator.GetTotalProjectileSize(WeaponBaseStats, _upgrades);
+            _totalProjectileSpeed = ProjectileWeaponStatsCalculator.GetTotalProjectileSpeed(WeaponBaseStats, _upgrades);
+            _totalCooldown = ProjectileWeaponStatsCalculator.GetTotalCooldown(WeaponBaseStats, _upgrades);
             UpdateProjectileSpawner();
             RestartAutoFire(AutoFire);
-        }
-
-        public void AddUpgrade(WeaponUpgrade weaponUpgrade)
-        {
-            _upgrades.Add(weaponUpgrade);
-            RecalculateAllStats();
         }
 
         public void Upgrade(WeaponUpgradeType weaponUpgradeType, object upgradeValue)

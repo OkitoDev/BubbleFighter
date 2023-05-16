@@ -18,7 +18,7 @@ namespace Game.Weapons.ScriptableObjects
 #endif
         [SerializeReference, SubclassSelector] public IMovementPattern projectileMovementPattern;
         [SerializeReference, SubclassSelector] public IProjectileSpawnPointProvider projectileSpawnPointProvider;
-        [SerializeReference, SubclassSelector] public IWeaponStatsCalculator weaponStatsCalculator;
+        [SerializeReference, SubclassSelector] public IProjectileWeaponStatsCalculator projectileWeaponStatsCalculator;
         public BaseProjectile projectilePrefab;
         public WeaponStats weaponBaseStats;
         public Sprite projectileSprite;
@@ -29,11 +29,11 @@ namespace Game.Weapons.ScriptableObjects
         public ProjectileMovementUpgradeTree projectileMovementUpgradeTree;
         public ProjectileSpawnPointsUpgradeTree projectileSpawnPointsUpgradeTree;
 
-        public ProjectileWeaponData(IMovementPattern projectileMovementPattern, IProjectileSpawnPointProvider projectileSpawnPointProvider, IWeaponStatsCalculator weaponStatsCalculator)
+        public ProjectileWeaponData(IMovementPattern projectileMovementPattern, IProjectileSpawnPointProvider projectileSpawnPointProvider, IProjectileWeaponStatsCalculator projectileWeaponStatsCalculator)
         {
             this.projectileMovementPattern = projectileMovementPattern;
             this.projectileSpawnPointProvider = projectileSpawnPointProvider;
-            this.weaponStatsCalculator = weaponStatsCalculator;
+            this.projectileWeaponStatsCalculator = projectileWeaponStatsCalculator;
         }
 
         public void OnValidate() 

@@ -9,4 +9,5 @@ namespace Game.Upgrades.UpgradeTrees
     {
         public ReferenceUpgrades<IMovementPattern> projectileMovementUpgrades = new ReferenceUpgrades<IMovementPattern>();
     }
+    
 }
